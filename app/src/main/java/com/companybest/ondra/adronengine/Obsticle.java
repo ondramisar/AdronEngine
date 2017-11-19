@@ -2,17 +2,14 @@ package com.companybest.ondra.adronengine;
 
 import android.util.Log;
 
-import com.companybest.ondra.adronengine.Collisions.CollisionBox;
-import com.companybest.ondra.adronengine.Collisions.CollisionHandler;
-import com.companybest.ondra.adronengine.Collisions.CollisionSystem;
-import com.companybest.ondra.adronengine.Entity.Entity;
-import com.companybest.ondra.adronengine.OpenGl.EntityComponents;
-import com.companybest.ondra.adronengine.OpenGl.Sprite;
-import com.companybest.ondra.adronengine.OpenGl.Texture;
+import com.companybest.ondra.adron.Collisions.CollisionBox;
+import com.companybest.ondra.adron.Collisions.CollisionHandler;
+import com.companybest.ondra.adron.Collisions.CollisionSystem;
+import com.companybest.ondra.adron.Entity.Entity;
+import com.companybest.ondra.adron.OpenGl.EntityComponents;
+import com.companybest.ondra.adron.OpenGl.Sprite;
+import com.companybest.ondra.adron.OpenGl.Texture;
 
-/**
- * Created by Ondra on 08.11.2017.
- */
 
 public class Obsticle extends Sprite implements CollisionHandler, CollisionBox {
 

@@ -2,15 +2,15 @@ package com.companybest.ondra.adronengine;
 
 import android.os.Bundle;
 
-import com.companybest.ondra.adronengine.BaseClasses.BasicClass;
-import com.companybest.ondra.adronengine.Collisions.CollisionSystem;
-import com.companybest.ondra.adronengine.Engine.Engine;
-import com.companybest.ondra.adronengine.Entity.Camera;
-import com.companybest.ondra.adronengine.Entity.Entity;
-import com.companybest.ondra.adronengine.Entity.Scene;
-import com.companybest.ondra.adronengine.OpenGl.Texture;
-import com.companybest.ondra.adronengine.OpenGl.TextureLibrary;
-import com.companybest.ondra.adronengine.Rendering.AdrGlSurfaceView;
+import com.companybest.ondra.adron.BaseClasses.BasicClass;
+import com.companybest.ondra.adron.Collisions.CollisionSystem;
+import com.companybest.ondra.adron.Engine.Engine;
+import com.companybest.ondra.adron.Entity.Camera;
+import com.companybest.ondra.adron.Entity.Entity;
+import com.companybest.ondra.adron.Entity.Scene;
+import com.companybest.ondra.adron.OpenGl.Texture;
+import com.companybest.ondra.adron.OpenGl.TextureLibrary;
+import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
 
 import java.util.Random;
 

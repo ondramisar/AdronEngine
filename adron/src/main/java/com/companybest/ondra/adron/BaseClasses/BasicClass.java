@@ -1,6 +1,9 @@
 package com.companybest.ondra.adron.BaseClasses;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.companybest.ondra.adron.Engine.Engine;
@@ -22,22 +25,32 @@ public abstract class BasicClass extends AppCompatActivity implements IRenderUpd
     private Touch mTouch;
 
 
-    public void setUpEngine(Engine engine, Context context, IOnTouchListener onTouchListener){
+    public void setUpEngine(Engine engine, Context context, IOnTouchListener onTouchListener) {
         this.mTouch = new Touch(onTouchListener);
         this.mEngine = engine;
         setUpView(new AdrGlSurfaceView(context), mTouch);
     }
 
-    public void setUpEngine(Engine engine, IOnTouchListener onTouchListener, AdrGlSurfaceView adrGlSurfaceView){
+    public void setUpEngine(Engine engine, IOnTouchListener onTouchListener, AdrGlSurfaceView adrGlSurfaceView) {
         this.mTouch = new Touch(onTouchListener);
         this.mEngine = engine;
         setUpView(adrGlSurfaceView, mTouch);
     }
 
-    private void setUpView(AdrGlSurfaceView adrGlSurfaceView, Touch touch){
+    private void setUpView(AdrGlSurfaceView adrGlSurfaceView, Touch touch) {
         this.mGlSurfaceView = adrGlSurfaceView;
         this.mGlSurfaceView.setRenderer(this.mEngine, this);
         this.mGlSurfaceView.setOnTouchListener(touch);
+    }
+
+    public void adrStartActivity(Activity activity, Intent intent) {
+        mGlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        activity.overridePendingTransition(0, 0);
+        activity.startActivity(intent);
+        activity.finish();
+        activity.overridePendingTransition(0, 0);
+
     }
 
     public Engine getEngine() {
@@ -45,14 +58,14 @@ public abstract class BasicClass extends AppCompatActivity implements IRenderUpd
     }
 
     public int getWidth() {
-        return  mEngine.getWidth();
+        return mEngine.getWidth();
     }
 
     public int getHeight() {
         return mEngine.getHeight();
     }
 
-    public Scene getScene(){
+    public Scene getScene() {
         return mEngine.getScene();
     }
 
@@ -60,7 +73,7 @@ public abstract class BasicClass extends AppCompatActivity implements IRenderUpd
         return mTouch;
     }
 
-    public TextureLibrary getTextureLibrary(){
+    public TextureLibrary getTextureLibrary() {
         return mEngine.getTextureLibrary();
     }
 

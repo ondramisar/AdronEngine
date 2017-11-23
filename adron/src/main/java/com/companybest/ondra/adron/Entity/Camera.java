@@ -20,16 +20,22 @@ public class Camera extends Entity {
     private double gridUnitX;     // Size of a unit on the grid on the X axis.
     private double gridUnitY;     // Size of a unit on the grid on the Y axis.
 
+    private int mCustomWidht;
+    private int mCustomHeight;
+    private boolean hasCustomPropertities;
+
     /**
      * Default Constructor
-     * @param camX X position of camera
-     * @param camY Y position of camera
+     *
+     * @param camX    X position of camera
+     * @param camY    Y position of camera
      * @param camZoom Zoom of camera
      */
     public Camera(float camX, float camY, double camZoom) {
         this.camX = camX;
         this.camY = camY;
         this.camZoom = camZoom;
+        hasCustomPropertities = false;
         gridUnitX = 1;
         gridUnitY = 1;
         setName("CAMERA");
@@ -37,9 +43,10 @@ public class Camera extends Entity {
 
     /**
      * Constructor with setting the anchorX and anchorY
-     * @param camX X position of camera
-     * @param camY Y position of camera
-     * @param camZoom Zoom of camera
+     *
+     * @param camX     X position of camera
+     * @param camY     Y position of camera
+     * @param camZoom  Zoom of camera
      * @param cAnchorX
      * @param cAnchorY
      */
@@ -49,6 +56,21 @@ public class Camera extends Entity {
         this.camZoom = camZoom;
         this.cAnchorX = cAnchorX;
         this.cAnchorY = cAnchorY;
+        hasCustomPropertities = false;
+        gridUnitX = 1;
+        gridUnitY = 1;
+        setName("CAMERA");
+    }
+
+    public Camera(float camX, float camY, double camZoom, double cAnchorX, double cAnchorY, int pWidth, int pHeight) {
+        this.camX = camX;
+        this.camY = camY;
+        this.camZoom = camZoom;
+        this.cAnchorX = cAnchorX;
+        this.cAnchorY = cAnchorY;
+        this.mCustomWidht = pWidth;
+        this.mCustomHeight = pHeight;
+        hasCustomPropertities = true;
         gridUnitX = 1;
         gridUnitY = 1;
         setName("CAMERA");
@@ -69,10 +91,17 @@ public class Camera extends Entity {
     }
 
     public void update(int width, int height) {
-        camLeft = (float) (camX * gridUnitX + cAnchorX - width * camZoom * (cAnchorX / width));
-        camRight = (float) (camX * gridUnitX + cAnchorX + width * camZoom * ((width - cAnchorX) / width));
-        camTop = (float) (camY * gridUnitY + cAnchorY + height * camZoom * ((height - cAnchorY) / height));
-        camBottom = (float) (camY * gridUnitY + cAnchorY - height * camZoom * (cAnchorY / height));
+        if (hasCustomPropertities) {
+            camLeft = (float) (camX * gridUnitX + cAnchorX - mCustomWidht * camZoom * (cAnchorX / mCustomWidht));
+            camRight = (float) (camX * gridUnitX + cAnchorX + mCustomWidht * camZoom * ((mCustomWidht - cAnchorX) / mCustomWidht));
+            camTop = (float) (camY * gridUnitY + cAnchorY + mCustomHeight * camZoom * ((mCustomHeight - cAnchorY) / mCustomHeight));
+            camBottom = (float) (camY * gridUnitY + cAnchorY - mCustomHeight * camZoom * (cAnchorY / mCustomHeight));
+        } else {
+            camLeft = (float) (camX * gridUnitX + cAnchorX - width * camZoom * (cAnchorX / width));
+            camRight = (float) (camX * gridUnitX + cAnchorX + width * camZoom * ((width - cAnchorX) / width));
+            camTop = (float) (camY * gridUnitY + cAnchorY + height * camZoom * ((height - cAnchorY) / height));
+            camBottom = (float) (camY * gridUnitY + cAnchorY - height * camZoom * (cAnchorY / height));
+        }
     }
 
     public double getCamX() {

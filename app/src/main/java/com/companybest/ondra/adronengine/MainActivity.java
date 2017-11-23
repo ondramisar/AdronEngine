@@ -43,14 +43,29 @@ public class MainActivity extends BasicClass {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        textureLibrary.cleanUp();
+    }
+
+    @Override
     public Scene setUpScene() {
         Scene scene = new Scene();
 
-        camera = new Camera(0, 0, 0.9, getWidth() / 2, getHeight() /2);
+      //  TileMapData t = TMXLoader.readTMX("lvl1.tmx", this);
+
+     //   Bitmap mapImage = TMXLoader.createBitmap(t, this, 0, t.layers.size());
+
+       // Background background = new Background(0 , 0, new Texture(mapImage, getTextureLibrary()));
+
+
+        camera = new Camera(0, 0, 1, 0, 0, getWidth(), getHeight());
         mCollisionSystem = new CollisionSystem();
 
         bird = new Bird(100, getHeight() / 2, 150, 150, new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), mCollisionSystem, this);
         scene.addComponent(bird);
+
+        int height = getHeight();
 
         Random r = new Random();
         int y1 = r.nextInt(400) - 550;
@@ -73,6 +88,10 @@ public class MainActivity extends BasicClass {
 
         scene.addComponent(mCollisionSystem);
         scene.addComponent(camera);
+
+
+
+      //  scene.addComponent(background);
 
         return scene;
     }

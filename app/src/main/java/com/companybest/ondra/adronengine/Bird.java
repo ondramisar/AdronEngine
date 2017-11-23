@@ -18,6 +18,7 @@ import javax.microedition.khronos.opengles.GL10;
 public class Bird extends Sprite implements CollisionHandler, CollisionBox {
 
     private Activity mContext;
+    private int side;
 
     public Bird(float x, float y, Texture texture, CollisionSystem collisionSystem) {
         super(x, y, texture);
@@ -28,6 +29,14 @@ public class Bird extends Sprite implements CollisionHandler, CollisionBox {
         super(x, y, width, height, texture);
         collisionSystem.addEntity(this);
         this.mContext = context;
+    }
+
+    public int getSide() {
+        return side;
+    }
+
+    public void setSide(int side) {
+        this.side = side;
     }
 
     @Override

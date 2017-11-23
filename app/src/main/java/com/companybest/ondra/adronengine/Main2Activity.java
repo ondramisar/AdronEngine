@@ -21,5 +21,14 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button minigame = findViewById(R.id.mini_game);
+        minigame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), TapMiniGameActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

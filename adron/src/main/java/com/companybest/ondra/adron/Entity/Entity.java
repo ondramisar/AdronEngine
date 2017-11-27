@@ -1,6 +1,7 @@
 package com.companybest.ondra.adron.Entity;
 
 
+import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.OpenGl.EntityComponents;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -23,16 +24,19 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     private String mName;
 
+    private Engine mEngine;
+
     public Entity() {
 
     }
 
-    public Entity(float x, float y, float width, float height) {
+    public Entity(float x, float y, float width, float height, Engine engine) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.mScale = 1;
+        this.mEngine = engine;
     }
 
     @Override
@@ -144,4 +148,13 @@ public abstract class Entity implements IEntity, EntityComponents {
         return this;
     }
 
+    public Engine getEngine() {
+        return mEngine;
+    }
+
+    public void setEngine(Engine engine) {
+        mEngine = engine;
+    }
 }
+
+

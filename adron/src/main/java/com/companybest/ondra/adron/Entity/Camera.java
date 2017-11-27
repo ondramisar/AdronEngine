@@ -1,8 +1,11 @@
 package com.companybest.ondra.adron.Entity;
 
 
+import com.companybest.ondra.adron.Engine.Engine;
+
 import javax.microedition.khronos.opengles.GL10;
 
+//TODO DO ALL CAMERA WITH WITH DIFFERENT GRID
 public class Camera extends Entity {
 
     // Camera variables
@@ -16,13 +19,8 @@ public class Camera extends Entity {
     private float camTop;      // The top edge of the camera
     private float camBottom;   // The bottom edge of the camera
 
+    private Engine mEngine;
 
-    private double gridUnitX;     // Size of a unit on the grid on the X axis.
-    private double gridUnitY;     // Size of a unit on the grid on the Y axis.
-
-    private int mCustomWidht;
-    private int mCustomHeight;
-    private boolean hasCustomPropertities;
 
     /**
      * Default Constructor
@@ -31,13 +29,11 @@ public class Camera extends Entity {
      * @param camY    Y position of camera
      * @param camZoom Zoom of camera
      */
-    public Camera(float camX, float camY, double camZoom) {
+    public Camera(float camX, float camY, double camZoom, Engine engine) {
         this.camX = camX;
         this.camY = camY;
         this.camZoom = camZoom;
-        hasCustomPropertities = false;
-        gridUnitX = 1;
-        gridUnitY = 1;
+        this.mEngine = engine;
         setName("CAMERA");
     }
 
@@ -50,29 +46,13 @@ public class Camera extends Entity {
      * @param cAnchorX
      * @param cAnchorY
      */
-    public Camera(float camX, float camY, double camZoom, double cAnchorX, double cAnchorY) {
+    public Camera(float camX, float camY, double camZoom, double cAnchorX, double cAnchorY, Engine engine) {
         this.camX = camX;
         this.camY = camY;
         this.camZoom = camZoom;
         this.cAnchorX = cAnchorX;
         this.cAnchorY = cAnchorY;
-        hasCustomPropertities = false;
-        gridUnitX = 1;
-        gridUnitY = 1;
-        setName("CAMERA");
-    }
-
-    public Camera(float camX, float camY, double camZoom, double cAnchorX, double cAnchorY, int pWidth, int pHeight) {
-        this.camX = camX;
-        this.camY = camY;
-        this.camZoom = camZoom;
-        this.cAnchorX = cAnchorX;
-        this.cAnchorY = cAnchorY;
-        this.mCustomWidht = pWidth;
-        this.mCustomHeight = pHeight;
-        hasCustomPropertities = true;
-        gridUnitX = 1;
-        gridUnitY = 1;
+        this.mEngine = engine;
         setName("CAMERA");
     }
 
@@ -90,19 +70,16 @@ public class Camera extends Entity {
         gl.glOrthof(camLeft, camRight, camTop, camBottom, -1, 1);
     }
 
-    public void update(int width, int height) {
-        if (hasCustomPropertities) {
-            camLeft = (float) (camX * gridUnitX + cAnchorX - mCustomWidht * camZoom * (cAnchorX / mCustomWidht));
-            camRight = (float) (camX * gridUnitX + cAnchorX + mCustomWidht * camZoom * ((mCustomWidht - cAnchorX) / mCustomWidht));
-            camTop = (float) (camY * gridUnitY + cAnchorY + mCustomHeight * camZoom * ((mCustomHeight - cAnchorY) / mCustomHeight));
-            camBottom = (float) (camY * gridUnitY + cAnchorY - mCustomHeight * camZoom * (cAnchorY / mCustomHeight));
-        } else {
-            camLeft = (float) (camX * gridUnitX + cAnchorX - width * camZoom * (cAnchorX / width));
-            camRight = (float) (camX * gridUnitX + cAnchorX + width * camZoom * ((width - cAnchorX) / width));
-            camTop = (float) (camY * gridUnitY + cAnchorY + height * camZoom * ((height - cAnchorY) / height));
-            camBottom = (float) (camY * gridUnitY + cAnchorY - height * camZoom * (cAnchorY / height));
-        }
+    public void update(double width, double height) {
+        //TODO THING OF WAY TO USE THIS IN MAIN CLASS
+        camLeft = (float) (camX * mEngine.getGridUnitX() + cAnchorX - width * camZoom * (cAnchorX / width));
+        camRight = (float) (camX * mEngine.getGridUnitX() + cAnchorX + width * camZoom * ((width - cAnchorX) / width));
+        camTop = (float) (camY * mEngine.getGridUnitY() + cAnchorY + height * camZoom * ((height - cAnchorY) / height));
+        camBottom = (float) (camY * mEngine.getGridUnitY() + cAnchorY - height * camZoom * (cAnchorY / height));
+
     }
+
+
 
     public double getCamX() {
         return camX;
@@ -119,4 +96,5 @@ public class Camera extends Entity {
     public void setCamY(float camY) {
         this.camY = camY;
     }
+
 }

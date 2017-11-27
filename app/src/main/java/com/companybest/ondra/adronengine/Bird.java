@@ -7,6 +7,7 @@ import android.util.Log;
 import com.companybest.ondra.adron.Collisions.CollisionBox;
 import com.companybest.ondra.adron.Collisions.CollisionHandler;
 import com.companybest.ondra.adron.Collisions.CollisionSystem;
+import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Entity;
 import com.companybest.ondra.adron.OpenGl.EntityComponents;
 import com.companybest.ondra.adron.OpenGl.Sprite;
@@ -20,13 +21,13 @@ public class Bird extends Sprite implements CollisionHandler, CollisionBox {
     private Activity mContext;
     private int side;
 
-    public Bird(float x, float y, Texture texture, CollisionSystem collisionSystem) {
-        super(x, y, texture);
+    public Bird(float x, float y, Engine engine, Texture texture, CollisionSystem collisionSystem) {
+        super(x, y, engine, texture);
         collisionSystem.addEntity(this);
     }
 
-    public Bird(float x, float y, float width, float height, Texture texture, CollisionSystem collisionSystem, Activity context) {
-        super(x, y, width, height, texture);
+    public Bird(float x, float y, float width, float height, Engine engine, Texture texture, CollisionSystem collisionSystem, Activity context) {
+        super(x, y, width, height,engine, texture);
         collisionSystem.addEntity(this);
         this.mContext = context;
     }
@@ -53,11 +54,8 @@ public class Bird extends Sprite implements CollisionHandler, CollisionBox {
         Log.i("usernbi", "COLLISION BIRD");
 
        Intent myIntent = new Intent(mContext, Main2Activity.class);
-        myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        ((Activity) mContext).overridePendingTransition(0, 0);
-        mContext.startActivity(myIntent);
-        ((Activity) mContext).finish();
-        ((Activity) mContext).overridePendingTransition(0, 0);
+       MainActivity mainActivity = (MainActivity) mContext;
+       mainActivity.adrStartActivity(mContext,myIntent);
     }
 
     @Override

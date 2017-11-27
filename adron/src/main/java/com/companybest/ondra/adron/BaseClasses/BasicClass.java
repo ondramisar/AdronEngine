@@ -7,6 +7,7 @@ import android.opengl.GLSurfaceView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.companybest.ondra.adron.Engine.Engine;
+import com.companybest.ondra.adron.Entity.Camera;
 import com.companybest.ondra.adron.Entity.Scene;
 import com.companybest.ondra.adron.Input.IOnTouchListener;
 import com.companybest.ondra.adron.Input.Touch;
@@ -69,6 +70,10 @@ public abstract class BasicClass extends AppCompatActivity implements IRenderUpd
         return mEngine.getScene();
     }
 
+    public Camera getCamera(){
+        return mEngine.getCamera();
+    }
+
     public Touch getTouch() {
         return mTouch;
     }
@@ -84,8 +89,8 @@ public abstract class BasicClass extends AppCompatActivity implements IRenderUpd
 
     @Override
     public void onSurfaceChanged(GL10 gl10, int pWidth, int pHeight) {
-        mEngine.setWidth(pWidth);
-        mEngine.setHeight(pHeight);
+        mEngine.setViewWidth(pWidth);
+        mEngine.setViewHeight(pHeight);
     }
 }
 

@@ -12,6 +12,7 @@ import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
 /**
  * class for handling touch event
  */
+//TODO REFACTOR TO WORK WITH VIEW HEIGHT AND WIDTH
 public class Touch implements View.OnTouchListener {
 
     private int numOfTouches;
@@ -21,7 +22,6 @@ public class Touch implements View.OnTouchListener {
     private Point mPoint;
 
     /**
-     *
      * @param onTouchListener interface implemented in activity
      */
     public Touch(IOnTouchListener onTouchListener) {
@@ -40,14 +40,14 @@ public class Touch implements View.OnTouchListener {
         numOfTouches = event.getPointerCount();            // The current number of touches
         int index = event.getActionIndex();              // The finger that is touching the screen
 
-        float x = event.getX();
-        float y = event.getY();
-
-        setX((int) x);
-        setY((int) y);
-
         if (v instanceof AdrGlSurfaceView) {
             AdrGlSurfaceView view = (AdrGlSurfaceView) v;
+
+            float x = (float) (event.getX() / view.getEngine().getGridUnitX());
+            float y = (float) (event.getY() / view.getEngine().getGridUnitY());
+
+            setX((int) x);
+            setY((int) y);
 
             switch (event.getActionMasked() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
@@ -195,18 +195,16 @@ public class Touch implements View.OnTouchListener {
     }
 
     /**
-     *
      * @return position x
      */
-    public int getX(){
+    public int getX() {
         return mPoint.x;
     }
 
     /**
-     *
      * @return position y
      */
-    public int getY(){
+    public int getY() {
         return mPoint.y;
     }
 

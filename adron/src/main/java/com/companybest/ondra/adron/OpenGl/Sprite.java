@@ -1,5 +1,6 @@
 package com.companybest.ondra.adron.OpenGl;
 
+import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Entity;
 
 import java.nio.ByteBuffer;
@@ -70,9 +71,9 @@ public class Sprite extends Entity {
      * @param height  heigt of the Sprite
      * @param texture texture of the Sprite
      */
-    public Sprite(float x, float y, float width, float height, Texture texture) {
+    public Sprite(float x, float y, float width, float height, Engine engine, Texture texture) {
 
-        super(x, y, width, height);
+        super(x, y, width, height,engine );
         this.texture = texture;
         Initialize();
 
@@ -85,9 +86,9 @@ public class Sprite extends Entity {
      * @param y       y position
      * @param texture texture of the Sprite
      */
-    public Sprite(float x, float y, Texture texture) {
+    public Sprite(float x, float y,Engine engine, Texture texture) {
 
-        super(x, y, texture.getWidth(), texture.getHeight());
+        super(x, y, texture.getWidth(), texture.getHeight(), engine);
         this.texture = texture;
         Initialize();
 
@@ -102,8 +103,8 @@ public class Sprite extends Entity {
      * @param totalFrames
      * @param texture
      */
-    public Sprite(float x, float y, int rows, int cols, int totalFrames, Texture texture) {
-        super(x, y, texture.getWidth() / cols, texture.getHeight() / rows);
+    public Sprite(float x, float y, int rows, int cols, int totalFrames, Engine engine,  Texture texture) {
+        super(x, y, texture.getWidth() / cols, texture.getHeight() / rows, engine);
 
         Initialize();
 

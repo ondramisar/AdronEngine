@@ -2,7 +2,6 @@ package com.companybest.ondra.adron.Collisions;
 
 
 import com.companybest.ondra.adron.Entity.Entity;
-import com.companybest.ondra.adron.OpenGl.CompobebtsHelp;
 import com.companybest.ondra.adron.OpenGl.EntityComponents;
 
 import java.util.ArrayList;
@@ -92,6 +91,7 @@ public class CollisionSystem extends Entity {
 
     /**
      * Add each CollisionBox component of Entity e to this system.
+     *
      * @param e an Entity with CollisionBox components.
      */
     public void addEntity(CollisionBox e) {
@@ -103,12 +103,12 @@ public class CollisionSystem extends Entity {
 
     /**
      * Add a new CollisionBox to this collision system.
+     *
      * @param c The CollisionBox to add to this collision system.
      */
     public void addCollidable(CollisionBox c) {
         hitBoxes.add(new HitBox(c));
     }
-
 
 
     @Override
@@ -134,80 +134,6 @@ public class CollisionSystem extends Entity {
                 }
             }
         }
-    }
-
-    /**
-     * Generates a CollisionBox object (collision box, hit box) using a parent Transformation and a box defined by two points within the bounds
-     * of the parent Transformation. The left edge of the parent Transformation will 0 on the x axis, while the right edge will be 1. The
-     * bottom of the parent Transformation will be 0 on the y axis and the top will be 1. Therefor, a box defined by points (0,0) and (1,1)
-     * will be the full bounds of the parent Transformation.
-     *
-     * @param x1 The left edge of the collision box
-     * @param y1 The bottom edge of the collision box
-     * @param x2 The right edge of the collision box
-     * @param y2 The top edge of the collision box
-     * @param owner The Entity that this collision box belongs to.
-     * @param parent The parent Transformation that this box is based on.
-     * @param collisionHandler An optional CollisionHandler to handle collision events with this box. Can be null.
-     *
-     * @return A new CollisionBox.
-     */
-    public static CollisionBox generateCollisionBox(final double x1, final double y1, final double x2, final double y2, final Entity owner, final EntityComponents parent, final CollisionHandler collisionHandler) {
-        return new CollisionBox() {
-            CompobebtsHelp t;
-
-            {
-                t = new CompobebtsHelp();
-                t.x = (float) ((((x1 + x2) / 2) - .5) * parent.getWidth());
-                t.y = (float) ((((1-y1 + 1-y2) / 2) - .5) * parent.getHeight());
-                t.width = (float) ((x2 - x1) * parent.getWidth());
-                t.height = (float) ((y2 - y1) * parent.getHeight());
-            }
-
-            @Override public CompobebtsHelp getBoxTransformation() {
-                double pw = parent.getWidth();
-                double ph = parent.getHeight();
-
-                t.x = (float) ((((x1 + x2) / 2) - .5) * pw);
-                t.y = (float) ((((1-y1 + 1-y2) / 2) - .5) * ph);
-                t.width = (float) ((x2 - x1) * pw);
-                t.height = (float) ((y2 - y1) * ph);
-                return t;
-            }
-
-            @Override public CollisionHandler getCollisionHandler() {
-                return collisionHandler;
-            }
-
-            @Override public Entity getEntity() {
-                return owner;
-            }
-        };
-    }
-
-    /**
-     * Generates a new CollisionBox using the provided Transformation for the bounds.
-     *
-     * @param transformation A Transformation defining the bounds of the CollisionBox
-     * @param collisionHandler A CollisionHandler, optional.
-     * @param owner The Entity that this box belongs to.
-     *
-     * @return A new CollisionBox
-     */
-    public static CollisionBox generateCollisionBox(final CompobebtsHelp transformation, final CollisionHandler collisionHandler, final Entity owner) {
-        return new CollisionBox() {
-            @Override public CompobebtsHelp getBoxTransformation() {
-                return transformation;
-            }
-
-            @Override public CollisionHandler getCollisionHandler() {
-                return collisionHandler;
-            }
-
-            @Override public Entity getEntity() {
-                return owner;
-            }
-        };
     }
 
  /*   public static boolean checkPosition(CollisionBox c, double x, double y) {
@@ -237,6 +163,7 @@ public class CollisionSystem extends Entity {
 
         /**
          * Generates a new hit box.
+         *
          * @param c
          */
         public HitBox(CollisionBox c) {
@@ -249,29 +176,10 @@ public class CollisionSystem extends Entity {
         public void update() {
             EntityComponents t = c.getBoxTransformation();
 
- /*           int x1 = (int) (CompobebtsHelp.getRealX(t) - Math.abs(t.getWidth()) * CompobebtsHelp.getRealScale(t) / 2) / cellW;
-            int y1 = (int) (CompobebtsHelp.getRealY(t) + Math.abs(t.getHeight()) * CompobebtsHelp.getRealScale(t) / 2) / cellH;
-
-            int x2 = (int) (CompobebtsHelp.getRealX(t) + Math.abs(t.getWidth()) * CompobebtsHelp.getRealScale(t) / 2) / cellW;
-            int y2 = (int) (CompobebtsHelp.getRealY(t) - Math.abs(t.getHeight()) * CompobebtsHelp.getRealScale(t) / 2) / cellH;
-
-
-            int x1 = (int) (t.getX() - Math.abs(t.getWidth()) * t.getScale() / 2) / cellW;
-            int y1 = (int) (t.getY() + Math.abs(t.getHeight()) * t.getScale() / 2) / cellH;
-
-            int x2 = (int) (t.getX() + Math.abs(t.getWidth()) * t.getScale() / 2) / cellW;
-            int y2 = (int) (t.getY() - Math.abs(t.getHeight()) *t.getScale() / 2) / cellH;
-
-
-            x = x1;
-            y = y1;
-            w = x2 - x1;
-            h = y1 - y2;
-*/
             x = (int) t.getX();
             y = (int) t.getY();
-            w = t.getWidth();
-            h = t.getHeight();
+            w = t.getWidth() - 20;
+            h = t.getHeight() - 20;
         }
     }
 }

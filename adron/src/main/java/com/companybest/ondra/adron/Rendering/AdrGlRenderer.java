@@ -70,7 +70,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         mRenderListener.onSurfaceChanged(gl, width, height);
 
         mEngine.setUpScene();
-
+      //  mEngine.getCamera().update(width, height);
 
         // Sets the current view port to the new size.
         gl.glViewport(0, 0, width, height);
@@ -117,7 +117,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         mEngine.onDrawFrame(gl10, averageDelta);
 
         if (mEngine.isCameraActive())
-            mEngine.getCamera().update(mEngine.getWidth(), mEngine.getHeight());
+            mEngine.getCamera().update(mEngine.getViewWidth(), mEngine.getViewHeight());
 
         mEngine.getTextureLibrary().LoadTextures(gl10);
 

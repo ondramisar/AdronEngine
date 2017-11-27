@@ -16,6 +16,9 @@ import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
 
 import java.util.Random;
 
+import javax.microedition.khronos.opengles.GL10;
+
+//TODO REFACTOR TO USE GRID WITH AND HEIGHT AND BE ABLE TO USE IT
 public class TapMiniGameActivity extends BasicClass {
 
     TextView count;
@@ -29,23 +32,32 @@ public class TapMiniGameActivity extends BasicClass {
         count = findViewById(R.id.count);
 
         AdrGlSurfaceView adrGlSurfaceView = findViewById(R.id.minigamesurface);
-        setUpEngine(new Engine(this, new TextureLibrary(), true), this, adrGlSurfaceView);
+        Engine engine = new Engine(this, new TextureLibrary(), true);
+        setUpEngine(engine, this, adrGlSurfaceView);
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl10, int pWidth, int pHeight) {
+        super.onSurfaceChanged(gl10, pWidth, pHeight);
+        getEngine().setGridHeight(400);
+        getEngine().setGridUnitX(getEngine().getGridUnitY());
     }
 
     @Override
     public Scene setUpScene() {
         Scene scene = new Scene();
 
-        Random r = new Random();
-        int y = r.nextInt(getHeight()) - 200;
-        int x = r.nextInt(getWidth()) - 200;
-
         CollisionSystem collisionSystem = new CollisionSystem();
 
-        Camera camera = new Camera(0, 0, 1, 0, 0);
+        Camera camera = new Camera(0, 0, 1, 0, 0, getEngine());
+
+
+        Random r = new Random();
+        int y = r.nextInt(getHeight());
+        int x = r.nextInt(getWidth());
 
         int side = r.nextInt(4);
-        Bird bird = new Bird(x, y, 200, 200, new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), collisionSystem, this);
+        Bird bird = new Bird(x, y, 35 , 35,getEngine(), new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), collisionSystem, this);
         bird.setName("BIRD");
         bird.setSide(side);
 
@@ -59,21 +71,20 @@ public class TapMiniGameActivity extends BasicClass {
     public void update(float dt) {
         Bird bird = (Bird) getScene().findEntity("BIRD");
 
+
         if (bird.getSide() == 0) {
-            bird.setX(bird.getX() + 2);
+            bird.setX(bird.getX() + 1f);
         } else if (bird.getSide() == 1) {
-            bird.setX(bird.getX() - 2);
+            bird.setX(bird.getX() - 1f);
         } else if (bird.getSide() == 2) {
-            bird.setY(bird.getY() + 2);
+            bird.setY(bird.getY() + 1f);
         } else if (bird.getSide() == 3) {
-            bird.setY(bird.getY() - 2);
+            bird.setY(bird.getY() - 1f);
         }
 
         if (bird.getX() < 0 || bird.getX() > getWidth() || bird.getY() < 0 || bird.getY() > getHeight()) {
 
             Intent myIntent = new Intent(this, Main2Activity.class);
-            //startActivity(myIntent);
-
             adrStartActivity(this, myIntent);
         }
     }
@@ -81,11 +92,11 @@ public class TapMiniGameActivity extends BasicClass {
     @Override
     public void onPress(float x, float y) {
         Bird bird = (Bird) getScene().findEntity("BIRD");
-        if (x < bird.getX() + bird.getWidth() && (x > bird.getX()) && (y < bird.getY() + bird.getHeight()) && (y > bird.getY())) {
+        if (x < bird.getX() + bird.getWidth() && (x + bird.getWidth()  > bird.getX()) && (y < bird.getY() + bird.getHeight()) && (y + bird.getHeight() > bird.getY())) {
             couter += 1;
             Random r = new Random();
-            int yNew = r.nextInt(getHeight()) - 200;
-            int xNew = r.nextInt(getWidth()) - 200;
+            int yNew = r.nextInt(getHeight());
+            int xNew = r.nextInt(getWidth());
 
             int side = r.nextInt(4);
             if (xNew < 0)

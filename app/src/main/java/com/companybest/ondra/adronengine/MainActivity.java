@@ -25,9 +25,11 @@ public class MainActivity extends BasicClass {
     Obsticle mObsticlebottom1;
     Obsticle mObsticleTop2;
     Obsticle mObsticleBottom2;
+    ObsticlePair obsticlePair;
     private double vy;
     private final double ACC = .4;      // The acceleration of gravity. Determines how fast the bug falls.
     private final double JUMP_V = 10.2;  // Velocity to give the bug to make it jump.
+    private final int SPACE = 90;       // The space between each flower in grid units
 
     CollisionSystem mCollisionSystem;
 
@@ -48,10 +50,13 @@ public class MainActivity extends BasicClass {
         textureLibrary.cleanUp();
     }
 
+
+
     @Override
     public Scene setUpScene() {
         Scene scene = new Scene();
 
+        //TODO make a renderer for a map
       //  TileMapData t = TMXLoader.readTMX("lvl1.tmx", this);
 
      //   Bitmap mapImage = TMXLoader.createBitmap(t, this, 0, t.layers.size());
@@ -59,33 +64,36 @@ public class MainActivity extends BasicClass {
        // Background background = new Background(0 , 0, new Texture(mapImage, getTextureLibrary()));
 
 
-        camera = new Camera(0, 0, 1, 0, 0, getWidth(), getHeight());
+        camera = new Camera(0, 0, 1, 0, 0, getEngine());
         mCollisionSystem = new CollisionSystem();
 
-        bird = new Bird(100, getHeight() / 2, 150, 150, new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), mCollisionSystem, this);
+        bird = new Bird(100, getHeight() / 2, 50, 50,getEngine(), new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), mCollisionSystem, this);
         scene.addComponent(bird);
 
         int height = getHeight();
 
         Random r = new Random();
-        int y1 = r.nextInt(400) - 550;
-        int y4 = r.nextInt(400) - 550;
-        int y2 = r.nextInt((getHeight() - 400) - (getHeight() / 2 + 200)) + (getHeight() / 2 + 200);
-        int y3 = r.nextInt((getHeight() - 400) - (getHeight() / 2 + 200)) + (getHeight() / 2 + 200);
+        int y1 = r.nextInt(50) ;
+        int y4 = r.nextInt(50) ;
+        int y2 = r.nextInt(getHeight() - getHeight() /2 ) +  getHeight() /2;
+        int y3 = r.nextInt(getHeight() - getHeight() / 2) +  getHeight() /2;
 
 
-        mObsticleTop1 = new Obsticle(getWidth(), y1, 100, 1000, new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
-        mObsticleTop2 = new Obsticle(getWidth() - 200, y4, 100, 1000, new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
+    /*    mObsticleTop1 = new Obsticle(getWidth(), y1, 50, 600,getEngine(), new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
+        mObsticleTop2 = new Obsticle(getWidth() - 70, y4, 50, 600,getEngine(), new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
 
 
-        mObsticlebottom1 = new Obsticle(getWidth(), y2, 100, 1000, new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
-        mObsticleBottom2 = new Obsticle(getWidth() - 200, y3, 100, 1000, new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
+        mObsticlebottom1 = new Obsticle(getWidth(), getHeight(), 50, 200,getEngine(), new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
+        mObsticleBottom2 = new Obsticle(getWidth() - 70, getHeight(), 50, 200,getEngine(), new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
 
         scene.addComponent(mObsticleTop1);
         scene.addComponent(mObsticlebottom1);
         scene.addComponent(mObsticleTop2);
-        scene.addComponent(mObsticleBottom2);
+        scene.addComponent(mObsticleBottom2);*/
 
+     obsticlePair = new ObsticlePair(0,0,getEngine(),new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
+    scene.addComponent(obsticlePair);
+        obsticlePair.sendToLeftEdge();
         scene.addComponent(mCollisionSystem);
         scene.addComponent(camera);
 
@@ -106,8 +114,23 @@ public class MainActivity extends BasicClass {
         if (bird.getY() > getHeight()) {
             bird.setY(10);
         }
+    /*    if (distance >= SPACE) {
 
-        int speed = 4;
+            // Move the next flowers off the right side of the screen
+            flowers[currentFlower].sendToRightEdge();
+
+            // Random y positions
+            flowers[currentFlower].randomizeY();
+
+            // Increment to the next flower.
+            currentFlower++;
+            if (currentFlower == NUM_FLOW) currentFlower = 0;
+
+            distance = 0;
+        }*/
+
+
+      /*  float speed = 1.f;
 
         mObsticleTop1.setX(mObsticleTop1.getX() - speed);
 
@@ -140,7 +163,7 @@ public class MainActivity extends BasicClass {
             int y3 = r.nextInt((getHeight() - 400) - (getHeight() / 2 + 200)) + (getHeight() / 2 + 200);
             mObsticleBottom2.setX(getWidth() + 10);
             mObsticleBottom2.setY(y3);
-        }
+        }*/
 
     }
 
@@ -153,6 +176,8 @@ public class MainActivity extends BasicClass {
     @Override
     public void onSurfaceChanged(GL10 gl10, int pWidth, int pHeight) {
         super.onSurfaceChanged(gl10, pWidth, pHeight);
+        getEngine().setGridHeight(800);
+        getEngine().setGridUnitX(getEngine().getGridUnitY());
     }
 
     @Override

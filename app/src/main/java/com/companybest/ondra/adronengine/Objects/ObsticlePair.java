@@ -1,11 +1,11 @@
-package com.companybest.ondra.adronengine;
+package com.companybest.ondra.adronengine.Objects;
 
 import com.companybest.ondra.adron.Collisions.CollisionBox;
 import com.companybest.ondra.adron.Collisions.CollisionHandler;
 import com.companybest.ondra.adron.Collisions.CollisionSystem;
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Entity;
-import com.companybest.ondra.adron.OpenGl.EntityComponents;
+import com.companybest.ondra.adron.Entity.EntityComponents;
 import com.companybest.ondra.adron.OpenGl.Sprite;
 import com.companybest.ondra.adron.OpenGl.Texture;
 
@@ -95,7 +95,7 @@ public class ObsticlePair extends Sprite implements CollisionHandler, CollisionB
     }
 
     @Override
-    public EntityComponents getBoxTransformation() {
+    public EntityComponents getEntityComponentsForColision() {
         return null;
     }
 

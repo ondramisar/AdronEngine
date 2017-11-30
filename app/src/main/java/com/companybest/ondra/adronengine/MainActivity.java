@@ -2,7 +2,7 @@ package com.companybest.ondra.adronengine;
 
 import android.os.Bundle;
 
-import com.companybest.ondra.adron.BaseClasses.BasicClass;
+import com.companybest.ondra.adron.BaseClasses.BasicAdrClass;
 import com.companybest.ondra.adron.Collisions.CollisionSystem;
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Camera;
@@ -11,12 +11,15 @@ import com.companybest.ondra.adron.Entity.Scene;
 import com.companybest.ondra.adron.OpenGl.Texture;
 import com.companybest.ondra.adron.OpenGl.TextureLibrary;
 import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
+import com.companybest.ondra.adronengine.Objects.Bird;
+import com.companybest.ondra.adronengine.Objects.Obsticle;
+import com.companybest.ondra.adronengine.Objects.ObsticlePair;
 
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class MainActivity extends BasicClass {
+public class MainActivity extends BasicAdrClass {
 
     TextureLibrary textureLibrary;
     Camera camera;
@@ -51,32 +54,31 @@ public class MainActivity extends BasicClass {
     }
 
 
-
     @Override
     public Scene setUpScene() {
         Scene scene = new Scene();
 
         //TODO make a renderer for a map
-      //  TileMapData t = TMXLoader.readTMX("lvl1.tmx", this);
+        //  TileMapData t = TMXLoader.readTMX("lvl1.tmx", this);
 
-     //   Bitmap mapImage = TMXLoader.createBitmap(t, this, 0, t.layers.size());
+        //   Bitmap mapImage = TMXLoader.createBitmap(t, this, 0, t.layers.size());
 
-       // Background background = new Background(0 , 0, new Texture(mapImage, getTextureLibrary()));
+        // Background background = new Background(0 , 0, new Texture(mapImage, getTextureLibrary()));
 
 
         camera = new Camera(0, 0, 1, 0, 0, getEngine());
         mCollisionSystem = new CollisionSystem();
 
-        bird = new Bird(100, getHeight() / 2, 50, 50,getEngine(), new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), mCollisionSystem, this);
+        bird = new Bird(100, getHeight() / 2, 50, 50, getEngine(), new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary()), mCollisionSystem, this);
         scene.addComponent(bird);
 
         int height = getHeight();
 
         Random r = new Random();
-        int y1 = r.nextInt(50) ;
-        int y4 = r.nextInt(50) ;
-        int y2 = r.nextInt(getHeight() - getHeight() /2 ) +  getHeight() /2;
-        int y3 = r.nextInt(getHeight() - getHeight() / 2) +  getHeight() /2;
+        int y1 = r.nextInt(50);
+        int y4 = r.nextInt(50);
+        int y2 = r.nextInt(getHeight() - getHeight() / 2) + getHeight() / 2;
+        int y3 = r.nextInt(getHeight() - getHeight() / 2) + getHeight() / 2;
 
 
     /*    mObsticleTop1 = new Obsticle(getWidth(), y1, 50, 600,getEngine(), new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
@@ -91,15 +93,14 @@ public class MainActivity extends BasicClass {
         scene.addComponent(mObsticleTop2);
         scene.addComponent(mObsticleBottom2);*/
 
-     obsticlePair = new ObsticlePair(0,0,getEngine(),new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
-    scene.addComponent(obsticlePair);
+        obsticlePair = new ObsticlePair(0, 0, getEngine(), new Texture(getApplicationContext(), R.drawable.pipe, getTextureLibrary()), mCollisionSystem);
+        scene.addComponent(obsticlePair);
         obsticlePair.sendToLeftEdge();
         scene.addComponent(mCollisionSystem);
         scene.addComponent(camera);
 
 
-
-      //  scene.addComponent(background);
+        //  scene.addComponent(background);
 
         return scene;
     }

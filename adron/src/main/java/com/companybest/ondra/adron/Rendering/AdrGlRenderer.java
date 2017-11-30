@@ -22,8 +22,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
     private float OPTIMAL_TIME = 1000 / OPTIMAL_FPS;  // Optimal time for a frame to take
     private float averageDelta = OPTIMAL_TIME;        // Average amount of time a frame takes
     private long lastTime;                            // Time the last frame took
-    private int frames = 0;                           // # of frames passed
-    private boolean outputFPS = true;
+    private int frames = 0;
 
     private double low;   // The lowest FPS
     private double high;  // The highest FPS
@@ -62,7 +61,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         gl.glEnable(GL10.GL_ALPHA_TEST);
         gl.glAlphaFunc(GL10.GL_GREATER, 0.1f);
-        //gl.glAlphaTest(GL10.GL_LESS, 1.0);
+
     }
 
     @Override
@@ -70,7 +69,9 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         mRenderListener.onSurfaceChanged(gl, width, height);
 
         mEngine.setUpScene();
-      //  mEngine.getCamera().update(width, height);
+        if (mEngine.isCameraActive())
+            mEngine.getCamera().update(width, height);
+
 
         // Sets the current view port to the new size.
         gl.glViewport(0, 0, width, height);
@@ -116,14 +117,12 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         // draws and updated the scene from engine
         mEngine.onDrawFrame(gl10, averageDelta);
 
-        if (mEngine.isCameraActive())
-            mEngine.getCamera().update(mEngine.getViewWidth(), mEngine.getViewHeight());
 
         mEngine.getTextureLibrary().LoadTextures(gl10);
 
         lastTime = now;
 
-        if (outputFPS && frames % 60 == 0) {
+        if (mEngine.isFpsOutput() && frames % 60 == 0) {
             double fps = (double) 1000 / (double) averageDelta;
 
             if (1000.0 / timeElapsed < low || low == -1) {

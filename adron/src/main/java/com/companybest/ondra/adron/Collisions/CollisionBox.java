@@ -2,7 +2,7 @@ package com.companybest.ondra.adron.Collisions;
 
 
 import com.companybest.ondra.adron.Entity.Entity;
-import com.companybest.ondra.adron.OpenGl.EntityComponents;
+import com.companybest.ondra.adron.Entity.EntityComponents;
 
 public interface CollisionBox  {
     /**
@@ -10,7 +10,7 @@ public interface CollisionBox  {
      * box of this CollisionBox object.
      * @return A Transformation defining a hit box.
      */
-    EntityComponents getBoxTransformation();
+    EntityComponents getEntityComponentsForColision();
 
     /**
      * If this CollisionBox has a CollisionHandler to handle collision events

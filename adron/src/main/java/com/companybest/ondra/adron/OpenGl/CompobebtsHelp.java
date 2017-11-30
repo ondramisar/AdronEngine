@@ -1,6 +1,8 @@
 package com.companybest.ondra.adron.OpenGl;
 
 
+import com.companybest.ondra.adron.Entity.EntityComponents;
+
 public class CompobebtsHelp implements EntityComponents {
 
     public float x = 0;

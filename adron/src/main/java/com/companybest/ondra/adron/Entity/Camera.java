@@ -5,7 +5,7 @@ import com.companybest.ondra.adron.Engine.Engine;
 
 import javax.microedition.khronos.opengles.GL10;
 
-//TODO DO ALL CAMERA WITH WITH DIFFERENT GRID
+
 public class Camera extends Entity {
 
     // Camera variables
@@ -20,7 +20,6 @@ public class Camera extends Entity {
     private float camBottom;   // The bottom edge of the camera
 
     private Engine mEngine;
-
 
     /**
      * Default Constructor
@@ -71,15 +70,12 @@ public class Camera extends Entity {
     }
 
     public void update(double width, double height) {
-        //TODO THING OF WAY TO USE THIS IN MAIN CLASS
         camLeft = (float) (camX * mEngine.getGridUnitX() + cAnchorX - width * camZoom * (cAnchorX / width));
         camRight = (float) (camX * mEngine.getGridUnitX() + cAnchorX + width * camZoom * ((width - cAnchorX) / width));
         camTop = (float) (camY * mEngine.getGridUnitY() + cAnchorY + height * camZoom * ((height - cAnchorY) / height));
         camBottom = (float) (camY * mEngine.getGridUnitY() + cAnchorY - height * camZoom * (cAnchorY / height));
 
     }
-
-
 
     public double getCamX() {
         return camX;

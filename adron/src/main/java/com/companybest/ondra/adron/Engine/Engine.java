@@ -21,10 +21,6 @@ public class Engine {
     private Camera mCamera;
     private boolean isCameraActive;
 
-    private int mWidth;
-    private int mHeight;
-
-
     private double gridUnitX;     // Size of a unit on the grid on the X axis.
     private double gridUnitY;     // Size of a unit on the grid on the Y axis.
 
@@ -35,9 +31,11 @@ public class Engine {
     private double viewWidth;     // The number of grid units that fit in the view width
     private double viewHeight;    // The number of grid units that fit in the view height
 
+    private boolean fpsOutput;
 
     /**
      * Basic Constructor
+     *
      * @param IRenderUpdateScene draw and update methods form your activity
      */
     public Engine(IRenderUpdateScene IRenderUpdateScene, TextureLibrary textureLibrary) {
@@ -46,11 +44,12 @@ public class Engine {
         this.isCameraActive = false;
         gridUnitX = 1;
         gridUnitY = 1;
-
+        fpsOutput = false;
     }
 
     /**
      * Constructor with camera
+     *
      * @param IRenderUpdateScene draw and update methods form your activity
      */
     public Engine(IRenderUpdateScene IRenderUpdateScene, TextureLibrary textureLibrary, boolean isCameraActive) {
@@ -59,19 +58,21 @@ public class Engine {
         this.isCameraActive = isCameraActive;
         gridUnitX = 1;
         gridUnitY = 1;
+        fpsOutput = false;
     }
 
     /**
      * Method that will be drawn in renderer
+     *
      * @param gl10
      * @param dt
      */
-    public void onDrawFrame(GL10 gl10, float dt){
+    public void onDrawFrame(GL10 gl10, float dt) {
         this.mScene.draw(gl10);
         this.mIRenderUpdateScene.update(dt);
     }
 
-    public void setUpScene(){
+    public void setUpScene() {
         mScene = this.mIRenderUpdateScene.setUpScene();
         if (isCameraActive)
             mCamera = (Camera) mScene.findEntity("CAMERA");
@@ -85,16 +86,29 @@ public class Engine {
         isCameraActive = cameraActive;
     }
 
+    public boolean isFpsOutput() {
+        return fpsOutput;
+    }
+
+    public void setFpsOutput(boolean fpsOutput) {
+        this.fpsOutput = fpsOutput;
+    }
+
     public int getWidth() {
-        return (int) gridWidth;
+        if (gridWidth != 0)
+            return (int) gridWidth;
+
+        return (int) viewWidth;
     }
 
     public int getHeight() {
-        return (int) gridHeight;
+        if (gridHeight != 0)
+            return (int) gridHeight;
+
+        return (int) viewHeight;
     }
 
     /**
-     *
      * @return get a drawing scene
      */
     public Scene getScene() {
@@ -103,6 +117,7 @@ public class Engine {
 
     /**
      * get the texture library
+     *
      * @return
      */
     public TextureLibrary getTextureLibrary() {

@@ -15,4 +15,11 @@
         android:layout_below="@+id/restart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/dodge_game"
+        android:text="dodge Game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mini_game"/>
 </RelativeLayout>

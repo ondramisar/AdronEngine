@@ -1,4 +1,4 @@
-package com.companybest.ondra.adronengine;
+package com.companybest.ondra.adronengine.Objects;
 
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.OpenGl.Sprite;

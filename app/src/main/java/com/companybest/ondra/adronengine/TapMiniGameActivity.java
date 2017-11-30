@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.companybest.ondra.adron.BaseClasses.BasicClass;
+import com.companybest.ondra.adron.BaseClasses.BasicAdrClass;
 import com.companybest.ondra.adron.Collisions.CollisionSystem;
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Camera;
@@ -13,13 +13,13 @@ import com.companybest.ondra.adron.Entity.Scene;
 import com.companybest.ondra.adron.OpenGl.Texture;
 import com.companybest.ondra.adron.OpenGl.TextureLibrary;
 import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
+import com.companybest.ondra.adronengine.Objects.Bird;
 
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-//TODO REFACTOR TO USE GRID WITH AND HEIGHT AND BE ABLE TO USE IT
-public class TapMiniGameActivity extends BasicClass {
+public class TapMiniGameActivity extends BasicAdrClass {
 
     TextView count;
     int couter;

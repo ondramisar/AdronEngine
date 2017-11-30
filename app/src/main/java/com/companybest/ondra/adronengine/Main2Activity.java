@@ -30,5 +30,14 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button dodgeGame = findViewById(R.id.dodge_game);
+        dodgeGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), DodgeActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }

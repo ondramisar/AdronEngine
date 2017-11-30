@@ -19,7 +19,7 @@ import com.companybest.ondra.adron.Rendering.IRenderUpdateScene;
 import javax.microedition.khronos.opengles.GL10;
 
 
-public abstract class BasicClass extends AppCompatActivity implements IRenderUpdateScene, IOnTouchListener, IRenderListener {
+public abstract class BasicAdrClass extends AppCompatActivity implements IRenderUpdateScene, IOnTouchListener, IRenderListener {
 
     private AdrGlSurfaceView mGlSurfaceView;
     private Engine mEngine;

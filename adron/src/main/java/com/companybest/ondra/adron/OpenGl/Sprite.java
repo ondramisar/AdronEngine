@@ -231,15 +231,6 @@ public class Sprite extends Entity {
         indexBuffer.put(indices);
         indexBuffer.position(0);
 
-        if (texture != null) {
-            if (texture.getId() != -1 && mTextureBuffer != null) {
-                gl.glEnable(GL10.GL_TEXTURE_2D);
-                gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-
-                gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
-                gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getId());
-            }
-        }
         gl.glColor4f(red / 100, green / 100, blue / 100, alpha / 100);
 
         // Counter-clockwise winding.
@@ -252,8 +243,24 @@ public class Sprite extends Entity {
         // Enabled the vertices buffer for writing and to be used during
         // rendering.
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-        // Specifies the location and data format of an array of vertex
-        // coordinates to use when rendering.
+
+        if (texture != null) {
+            if (texture.getId() != -1 && mTextureBuffer != null) {
+                gl.glEnable(GL10.GL_TEXTURE_2D);
+                gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+
+                gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getId());
+            }
+        }else {
+            gl.glEnable(GL10.GL_TEXTURE_2D);
+            gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+
+            gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
+            gl.glBindTexture(GL10.GL_TEXTURE_2D,0);
+        }
+
+
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
@@ -261,8 +268,10 @@ public class Sprite extends Entity {
         // Disable the vertices buffer.
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
-        if (texture.getId() != -1 && mTextureBuffer != null) {
-            gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+        if (texture != null) {
+            if (texture.getId() != -1 && mTextureBuffer != null) {
+                gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+            }
         }
 
         // Disable face culling.

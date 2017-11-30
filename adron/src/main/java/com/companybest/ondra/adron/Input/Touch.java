@@ -12,7 +12,7 @@ import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
 /**
  * class for handling touch event
  */
-//TODO REFACTOR TO WORK WITH VIEW HEIGHT AND WIDTH
+//TODO using multi Touch
 public class Touch implements View.OnTouchListener {
 
     private int numOfTouches;

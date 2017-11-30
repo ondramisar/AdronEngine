@@ -1,4 +1,4 @@
-package com.companybest.ondra.adronengine;
+package com.companybest.ondra.adronengine.Objects;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,9 +9,11 @@ import com.companybest.ondra.adron.Collisions.CollisionHandler;
 import com.companybest.ondra.adron.Collisions.CollisionSystem;
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Entity;
-import com.companybest.ondra.adron.OpenGl.EntityComponents;
+import com.companybest.ondra.adron.Entity.EntityComponents;
 import com.companybest.ondra.adron.OpenGl.Sprite;
 import com.companybest.ondra.adron.OpenGl.Texture;
+import com.companybest.ondra.adronengine.Main2Activity;
+import com.companybest.ondra.adronengine.MainActivity;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -59,7 +61,7 @@ public class Bird extends Sprite implements CollisionHandler, CollisionBox {
     }
 
     @Override
-    public EntityComponents getBoxTransformation() {
+    public EntityComponents getEntityComponentsForColision() {
         return getEntityComponents();
     }
 

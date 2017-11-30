@@ -2,7 +2,6 @@ package com.companybest.ondra.adron.Entity;
 
 
 import com.companybest.ondra.adron.Engine.Engine;
-import com.companybest.ondra.adron.OpenGl.EntityComponents;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -28,6 +27,10 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     public Entity() {
 
+    }
+
+    public Entity(Engine engine) {
+        mEngine = engine;
     }
 
     public Entity(float x, float y, float width, float height, Engine engine) {

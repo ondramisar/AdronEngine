@@ -1,7 +1,7 @@
 package com.companybest.ondra.adron.OpenGl;
 
 
-//TODO REWORK GETTING VERTICES, DOES NOT LOAD GRAPHIC PROPERLY
+//TODO Clean up
 public class Alignment {
 
     public static final int CENTRE = 1;

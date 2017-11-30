@@ -1,8 +1,11 @@
 package com.companybest.ondra.adron.Collisions;
 
 
+import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Entity;
-import com.companybest.ondra.adron.OpenGl.EntityComponents;
+import com.companybest.ondra.adron.Entity.EntityComponents;
+import com.companybest.ondra.adron.Entity.Scene;
+import com.companybest.ondra.adron.OpenGl.Graphic;
 
 import java.util.ArrayList;
 
@@ -19,9 +22,6 @@ public class CollisionSystem extends Entity {
     private ArrayList<HitBox> hitBoxes;      // All of the hit boxes in this system.
     private Entity parent;
 
-    /**
-     * Create a new collision system.
-     */
     public CollisionSystem() {
         init();
     }
@@ -29,8 +29,16 @@ public class CollisionSystem extends Entity {
     /**
      * Create a new collision system.
      */
-    public CollisionSystem(Entity parent) {
+    public CollisionSystem(Engine engine) {
+        super(engine);
+        init();
+    }
 
+    /**
+     * Create a new collision system with Scene.
+     */
+    public CollisionSystem(Engine engine, Entity parent) {
+        super(engine);
         this.parent = parent;
         init();
     }
@@ -46,31 +54,17 @@ public class CollisionSystem extends Entity {
     }
 
     public void showBoxes(boolean show) {
+        //TODO Trying to set drawing of collision box
         if (parent != null) {
-           /* QuadRenderSystem renderSystem = parent.getRoom().getQuadRenderSystem(new Graphic());
-            renderSystem.setLayerColor(2, 1, 0, 0, 0.5f);
-
+            Scene scene = (Scene) parent;
             if (show) {
-                for (final HitBox h : hitBoxes) {
-                    final GraphicAreaTransformation graphic = new AnimatedGraphicAreaTransform();
-
-                    Quad q = new Quad() {
-                        @Override
-                        public Transformation getTransformation() {
-                            return h.c.getBoxTransformation();
-                        }
-
-                        @Override
-                        public GraphicAreaTransformation getGraphicAreaTransformation() {
-                            return graphic;
-                        }
-                    };
-
-                    renderSystem.addQuad(q);
+                for (HitBox hitBox : hitBoxes) {
+                    Graphic graphic = new Graphic(hitBox.x, hitBox.y, hitBox.w, hitBox.y,getEngine(), null);
+                    scene.addComponent(graphic);
                 }
             } else {
-                renderSystem.removeAllQuads();
-            }*/
+
+            }
         }
     }
 
@@ -125,7 +119,6 @@ public class CollisionSystem extends Entity {
                     HitBox h2 = hitBoxes.get(j);
 
                     if (h1.c != h2.c) {                       // Make sure it isn't the same CollisionBox!
-                        //boolean collided = (((h2.y <= h1.y + h2.h) && (h2.y >= h1.y - h1.h)) && ((h2.x >= h1.x - h2.w) && (h2.x <= h1.x + h1.w)));
                         boolean collided = (h1.x < h2.x + h2.w) && (h1.x + h1.w > h2.x) && (h1.y < h2.y + h2.h) && (h1.y + h1.h > h2.y);
                         if (collided) {
                             h1.c.getCollisionHandler().onCollision(h2.c);
@@ -136,17 +129,17 @@ public class CollisionSystem extends Entity {
         }
     }
 
- /*   public static boolean checkPosition(CollisionBox c, double x, double y) {
-        Sprite t = c.getBoxTransformation();
+    public static boolean checkPosition(CollisionBox c, double x, double y, double pWidth, double pHeight) {
+        EntityComponents t = c.getEntityComponentsForColision();
 
-        int x1 = (int) (Transform.getRealX(t) - Math.abs(t.getWidth()) * Transform.getRealScale(t) / 2);
-        int y1 = (int) (Transform.getRealY(t) + Math.abs(t.getHeight()) * Transform.getRealScale(t) / 2);
+        int x1 = (int) t.getX();
+        int y1 = (int) t.getY();
 
-        int x2 = (int) (Transform.getRealX(t) + Math.abs(t.getWidth()) * Transform.getRealScale(t) / 2);
-        int y2 = (int) (Transform.getRealY(t) - Math.abs(t.getHeight()) * Transform.getRealScale(t) / 2);
+        int width = (int)t.getWidth();
+        int height = (int) t.getHeight();
 
-        return x >= x1 && x <= x2 && y <= y1 && y >= y2;
-    }*/
+        return (x < x1 + width) && (x + pWidth > x1) && (y < y1 + height) && (y + pHeight > y1);
+    }
 
     /**
      * An instance of this class is generated for each CollisionBox in this system each frame.
@@ -174,7 +167,7 @@ public class CollisionSystem extends Entity {
          * Refreshes this hit box to reflect changes in c's position, dimensions, and scale.
          */
         public void update() {
-            EntityComponents t = c.getBoxTransformation();
+            EntityComponents t = c.getEntityComponentsForColision();
 
             x = (int) t.getX();
             y = (int) t.getY();

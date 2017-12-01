@@ -10,6 +10,10 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import static javax.microedition.khronos.opengles.GL10.GL_BLEND;
+import static javax.microedition.khronos.opengles.GL10.GL_ONE_MINUS_SRC_ALPHA;
+import static javax.microedition.khronos.opengles.GL10.GL_SRC_ALPHA;
+
 public class Sprite extends Entity {
 
     public int currentFrame;
@@ -231,6 +235,9 @@ public class Sprite extends Entity {
         indexBuffer.put(indices);
         indexBuffer.position(0);
 
+        gl.glEnable(GL_BLEND);
+        gl.glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         gl.glColor4f(red / 100, green / 100, blue / 100, alpha / 100);
 
         // Counter-clockwise winding.
@@ -367,6 +374,14 @@ public class Sprite extends Entity {
      */
     public void setBlue(float blue) {
         this.blue = blue;
+    }
+
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
     }
 
     public Sprite getOwner(){

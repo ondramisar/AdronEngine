@@ -48,7 +48,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
 
         mEngine.getTextureLibrary().LoadTextures(gl);
 
-        // gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 
         // Enable Smooth Shading, default not really needed.
         gl.glShadeModel(GL10.GL_SMOOTH);
@@ -79,18 +79,11 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         gl.glMatrixMode(GL10.GL_PROJECTION);
         // Reset the projection matrix
         gl.glLoadIdentity();
-        // Calculate the aspect ratio of the window
-        //   GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
         // Select the modelview matrix
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         // Reset the modelview matrix
-        gl.glLoadIdentity();
-
-        gl.glEnable(GL10.GL_BLEND);         // Turn blending On
-        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
         gl.glOrthof(0, width, height, 0, 0, 1f);
-
 
     }
 

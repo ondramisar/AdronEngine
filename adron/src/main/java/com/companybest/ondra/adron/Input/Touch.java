@@ -55,7 +55,6 @@ public class Touch implements View.OnTouchListener {
                     return true;
 
                 case MotionEvent.ACTION_MOVE:
-                    isBeingTouch = true;
                     DespatchMove(x, y, view);
                     return true;
 

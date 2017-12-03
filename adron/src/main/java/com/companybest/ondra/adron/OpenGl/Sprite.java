@@ -145,6 +145,7 @@ public class Sprite extends Entity {
         this.id = spriteId++;
         currentFrame = 1;
         this.visible = true;
+        setAngle(0);
         this.alpha = 100;
         this.rows = 1;
         this.columns = 1;
@@ -152,6 +153,7 @@ public class Sprite extends Entity {
 
     /**
      * start animating
+     *
      * @param fps
      * @param start
      * @param end
@@ -162,6 +164,7 @@ public class Sprite extends Entity {
 
     /**
      * start animation with number of loops to be done
+     *
      * @param fps
      * @param start
      * @param end
@@ -431,6 +434,7 @@ public class Sprite extends Entity {
     public void setAlpha(float alpha) {
         this.alpha = alpha;
     }
+
 
     public Sprite getOwner() {
         return this;

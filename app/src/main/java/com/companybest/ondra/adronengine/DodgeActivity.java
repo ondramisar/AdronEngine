@@ -62,6 +62,7 @@ public class DodgeActivity extends BasicAdrClass {
         speed = 2;
 
         Texture texture = new Texture(getApplicationContext(), R.drawable.figure, getTextureLibrary());
+        Texture textureObs = new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary());
         CollisionSystem collisionSystem = new CollisionSystem(getEngine());
 
         Camera camera = new Camera(0, 0, 1, getWidth() / 2, getHeight() / 2, getEngine());
@@ -69,7 +70,7 @@ public class DodgeActivity extends BasicAdrClass {
         dodgePlayer.setName("Player");
         dodgePlayer.animate(10, 1, 6);
 
-        DodgePlayer obsticle = new DodgePlayer(getWidth() / 2 - 15, -50, 30, 30, getEngine(), texture, collisionSystem, this);
+        DodgePlayer obsticle = new DodgePlayer(getWidth() / 2 - 15, -50, 30, 30, getEngine(), textureObs, collisionSystem, this);
         obsticle.setName("Obsticle");
 
         scene.addComponent(collisionSystem);

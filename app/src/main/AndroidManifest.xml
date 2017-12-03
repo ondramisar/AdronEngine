@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TapMiniGameActivity" />
-        <activity android:name=".DodgeActivity"></activity>
+        <activity android:name=".DodgeActivity" />
+        <activity android:name=".MapActivity"></activity>
     </application>
 
 </manifest>

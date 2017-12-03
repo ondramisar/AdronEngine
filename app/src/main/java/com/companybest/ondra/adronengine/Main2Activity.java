@@ -39,5 +39,14 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Button map = findViewById(R.id.map_button);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 }

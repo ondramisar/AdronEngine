@@ -99,11 +99,6 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
     }
 
     @Override
-    public void update(float dt) {
-
-    }
-
-    @Override
     public void onRelease(float x, float y) {
 
     }

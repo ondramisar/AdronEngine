@@ -111,6 +111,10 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         // draws and updated the scene from engine
         mEngine.onDrawFrame(gl10, averageDelta);
 
+
+        if (mEngine.isCameraActive() && mEngine.getCamera() != null)
+            mEngine.getCamera().update(mEngine.getViewWidth(), mEngine.getViewHeight());
+
         lastTime = now;
 
         if (mEngine.isFpsOutput() && frames % 60 == 0) {

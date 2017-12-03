@@ -58,7 +58,6 @@ public class MainActivity extends BasicAdrClass {
     public Scene setUpScene() {
         Scene scene = new Scene();
 
-        //TODO make a renderer for a map
         //  TileMapData t = TMXLoader.readTMX("lvl1.tmx", this);
 
         //   Bitmap mapImage = TMXLoader.createBitmap(t, this, 0, t.layers.size());

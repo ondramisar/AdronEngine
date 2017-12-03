@@ -15,6 +15,8 @@ public abstract class Entity implements IEntity, EntityComponents {
     public float x;
     public float y;
 
+    private float angle;
+
     private float width;
     private float height;
 
@@ -143,7 +145,11 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     @Override
     public float getAngle() {
-        return 0;
+        return angle;
+    }
+
+    public void setAngle(float angle) {
+        this.angle = angle;
     }
 
     @Override

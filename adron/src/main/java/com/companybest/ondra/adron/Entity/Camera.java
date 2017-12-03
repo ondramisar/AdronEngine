@@ -21,6 +21,7 @@ public class Camera extends Entity {
 
     private Engine mEngine;
 
+
     /**
      * Default Constructor
      *
@@ -91,6 +92,34 @@ public class Camera extends Entity {
 
     public void setCamY(float camY) {
         this.camY = camY;
+    }
+
+    /**
+     * Get the coordinate of the left edge of the camera in grid units.
+     */
+    public float getCameraLeftEdge() {
+        return camLeft / (float) getEngine().getGridUnitX();
+    }
+
+    /**
+     * Get the coordinate of the right edge of the screen in grid units.
+     */
+    public float getCameraRightEdge() {
+        return camRight / (float) getEngine().getGridUnitX();
+    }
+
+    /**
+     * Get the coordinate of the bottom edge of the screen in grid units.
+     */
+    public float getCameraBottomEdge() {
+        return camBottom / (float) getEngine().getGridUnitY();
+    }
+
+    /**
+     * Get the coordinate of the top edge of the screen in grid units.
+     */
+    public float getCameraTopEdge() {
+        return camTop / (float)  getEngine().getGridUnitY();
     }
 
 }

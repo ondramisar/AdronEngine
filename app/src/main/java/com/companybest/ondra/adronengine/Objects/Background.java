@@ -17,7 +17,5 @@ public class Background extends Sprite{
         super(x, y, engine, texture);
     }
 
-    public Background(float x, float y, int rows, int cols, int totalFrames, Engine engine, Texture texture) {
-        super(x, y, rows, cols, totalFrames, engine, texture);
-    }
+
 }

@@ -56,9 +56,6 @@ public class ObsticlePair extends Sprite implements CollisionHandler, CollisionB
 
     }
 
-    public ObsticlePair(float x, float y, int rows, int cols, int totalFrames, Engine engine, Texture texture) {
-        super(x, y, rows, cols, totalFrames, engine, texture);
-    }
 
     @Override
     public void draw(GL10 gl) {

@@ -19,6 +19,7 @@ public class Engine {
     private Scene mScene;
     private TextureLibrary mTextureLibrary;
     private Camera mCamera;
+
     private boolean isCameraActive;
 
     private double gridUnitX;     // Size of a unit on the grid on the X axis.

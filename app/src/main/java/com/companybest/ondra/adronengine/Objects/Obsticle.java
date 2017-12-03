@@ -21,12 +21,6 @@ public class Obsticle extends Sprite implements CollisionHandler, CollisionBox {
         super(x, y, engine, texture);
     }
 
-    public Obsticle(float x, float y, int rows, int cols, int totalFrames, Engine engine, Texture texture) {
-        super(x, y, rows, cols, totalFrames, engine, texture);
-    }
-
-
-
     @Override
     public void onCollision(CollisionBox c) {
         Log.i("usernob", "COLLISION Obsticle");

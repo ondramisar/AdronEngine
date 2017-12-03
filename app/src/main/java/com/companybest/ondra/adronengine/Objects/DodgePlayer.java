@@ -28,16 +28,19 @@ public class DodgePlayer extends Sprite implements CollisionHandler, CollisionBo
         super(x, y, engine, texture);
     }
 
-    public DodgePlayer(float x, float y, int rows, int cols, int totalFrames, Engine engine, Texture texture) {
-        super(x, y, rows, cols, totalFrames, engine, texture);
+    public DodgePlayer(float x, float y, float width, float height, int rows, int cols, Engine engine, Texture texture, CollisionSystem collisionSystem, Activity activity) {
+        super(x, y, width, height, rows, cols, engine, texture);
+        collisionSystem.addEntity(this);
+        this.mActivity = activity;
     }
 
     @Override
     public void onCollision(CollisionBox c) {
-        if (c.getEntity().getName().equals("Obsticle")){
+        if (c.getEntity().getName().equals("Obsticle")) {
             Intent i = new Intent(mActivity, Main2Activity.class);
             BasicAdrClass basicAdrClass = (BasicAdrClass) mActivity;
             basicAdrClass.adrStartActivity(mActivity, i);
+
         }
     }
 

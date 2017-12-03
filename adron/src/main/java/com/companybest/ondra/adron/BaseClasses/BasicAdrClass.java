@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Camera;
+import com.companybest.ondra.adron.Entity.Entity;
 import com.companybest.ondra.adron.Entity.Scene;
 import com.companybest.ondra.adron.Input.IOnTouchListener;
 import com.companybest.ondra.adron.Input.Touch;
@@ -26,7 +27,7 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
     private Touch mTouch;
 
 
-    public void setUpEngine(Engine engine, Context context, IOnTouchListener onTouchListener) {
+    public void setUpEngine(Engine engine, IOnTouchListener onTouchListener, Context context) {
         this.mTouch = new Touch(onTouchListener);
         this.mEngine = engine;
         setUpView(new AdrGlSurfaceView(context), mTouch);
@@ -51,7 +52,6 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
         activity.startActivity(intent);
         activity.finish();
         activity.overridePendingTransition(0, 0);
-
     }
 
     public Engine getEngine() {
@@ -70,7 +70,7 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
         return mEngine.getScene();
     }
 
-    public Camera getCamera(){
+    public Camera getCamera() {
         return mEngine.getCamera();
     }
 
@@ -91,6 +91,46 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
     public void onSurfaceChanged(GL10 gl10, int pWidth, int pHeight) {
         mEngine.setViewWidth(pWidth);
         mEngine.setViewHeight(pHeight);
+    }
+
+    @Override
+    public void onPress(float x, float y) {
+
+    }
+
+    @Override
+    public void update(float dt) {
+
+    }
+
+    @Override
+    public void onRelease(float x, float y) {
+
+    }
+
+    @Override
+    public void onMove(float x, float y) {
+
+    }
+
+    @Override
+    public void onPress(Entity entity) {
+
+    }
+
+    @Override
+    public void onRelease(Entity entity) {
+
+    }
+
+    @Override
+    public void onMove(Entity entity) {
+
+    }
+
+    @Override
+    public void onReleaseOutside(Entity entity) {
+
     }
 }
 

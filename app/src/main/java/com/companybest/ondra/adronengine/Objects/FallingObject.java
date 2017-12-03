@@ -19,9 +19,7 @@ public class FallingObject extends Sprite implements CollisionBox,CollisionHandl
         super(x, y, engine, texture);
     }
 
-    public FallingObject(float x, float y, int rows, int cols, int totalFrames, Engine engine, Texture texture) {
-        super(x, y, rows, cols, totalFrames, engine, texture);
-    }
+
 
     @Override
     public void onCollision(CollisionBox c) {

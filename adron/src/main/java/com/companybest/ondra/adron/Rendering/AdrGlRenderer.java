@@ -48,7 +48,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
 
         mEngine.getTextureLibrary().LoadTextures(gl);
 
-         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 
         // Enable Smooth Shading, default not really needed.
         gl.glShadeModel(GL10.GL_SMOOTH);
@@ -69,7 +69,7 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         mRenderListener.onSurfaceChanged(gl, width, height);
 
         mEngine.setUpScene();
-        if (mEngine.isCameraActive())
+        if (mEngine.isCameraActive() && mEngine.getCamera() != null)
             mEngine.getCamera().update(width, height);
 
 
@@ -84,7 +84,6 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
         // Reset the modelview matrix
 
         gl.glOrthof(0, width, height, 0, 0, 1f);
-
     }
 
     @Override
@@ -107,11 +106,10 @@ public class AdrGlRenderer implements GLSurfaceView.Renderer {
             averageDelta = (timeElapsed + averageDelta * (OPTIMAL_FPS - 1)) / OPTIMAL_FPS;           // Update the average amount of time a frame takes
         }
 
+        mEngine.getTextureLibrary().LoadTextures(gl10);
+
         // draws and updated the scene from engine
         mEngine.onDrawFrame(gl10, averageDelta);
-
-
-        mEngine.getTextureLibrary().LoadTextures(gl10);
 
         lastTime = now;
 

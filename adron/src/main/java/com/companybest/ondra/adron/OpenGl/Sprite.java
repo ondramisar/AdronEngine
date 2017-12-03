@@ -16,14 +16,22 @@ import static javax.microedition.khronos.opengles.GL10.GL_SRC_ALPHA;
 
 public class Sprite extends Entity {
 
+    // Variables for animation
     public int currentFrame;
-    public int totalFrames;
     public int rows;
     public int columns;
 
+    private double fps = 0;
+    private int start = 0;
+    private int end = 0;
+    private int gameFramesPassed = 0;
+
+    private int timesPlayed = 0;
+    private int loop = 0;
+    private boolean animFinished = false;
+
     private boolean visible;
 
-    public boolean isPlaying;
 
     /**
      * name of the sprite to identify
@@ -42,15 +50,13 @@ public class Sprite extends Entity {
      */
     private Texture texture;
 
-
-    private int origin = 0;
-
     /**
      * Alpha determines the transparency of the sprite takes values from 0-100
      * default is 100
      */
     public float alpha;
 
+    //Color variables
     private float red = 100;
     private float green = 100;
     private float blue = 100;
@@ -63,8 +69,23 @@ public class Sprite extends Entity {
 
     // Our index buffer.
     private ShortBuffer indexBuffer;
-   private FloatBuffer mTextureBuffer;
+    private FloatBuffer mTextureBuffer;
     float[] textureCoordinates;
+
+    /**
+     * Create new Sprite
+     *
+     * @param x       x position
+     * @param y       y position
+     * @param texture texture of the Sprite
+     */
+    public Sprite(float x, float y, Engine engine, Texture texture) {
+
+        super(x, y, texture.getWidth(), texture.getHeight(), engine);
+        this.texture = texture;
+        Initialize();
+
+    }
 
     /**
      * Create new Sprite
@@ -77,22 +98,7 @@ public class Sprite extends Entity {
      */
     public Sprite(float x, float y, float width, float height, Engine engine, Texture texture) {
 
-        super(x, y, width, height,engine );
-        this.texture = texture;
-        Initialize();
-
-    }
-
-    /**
-     * Create new Sprite
-     *
-     * @param x       x position
-     * @param y       y position
-     * @param texture texture of the Sprite
-     */
-    public Sprite(float x, float y,Engine engine, Texture texture) {
-
-        super(x, y, texture.getWidth(), texture.getHeight(), engine);
+        super(x, y, width, height, engine);
         this.texture = texture;
         Initialize();
 
@@ -100,27 +106,36 @@ public class Sprite extends Entity {
 
     /**
      * Create new Sprite with animation
+     *
      * @param x
      * @param y
      * @param rows
      * @param cols
-     * @param totalFrames
      * @param texture
      */
-    public Sprite(float x, float y, int rows, int cols, int totalFrames, Engine engine,  Texture texture) {
-        super(x, y, texture.getWidth() / cols, texture.getHeight() / rows, engine);
-
+    public Sprite(float x, float y, int rows, int cols, Engine engine, Texture texture) {
+        super(x, y, texture.getWidth(), texture.getHeight(), engine);
         Initialize();
-
         this.rows = rows;
         this.columns = cols;
-
-        if (totalFrames > 0)
-            isPlaying = true;
-
         this.texture = texture;
-        this.totalFrames = totalFrames;
+    }
 
+    /**
+     * Create new Sprite with animation
+     *
+     * @param x
+     * @param y
+     * @param rows
+     * @param cols
+     * @param texture
+     */
+    public Sprite(float x, float y, float width, float height, int rows, int cols, Engine engine, Texture texture) {
+        super(x, y, width, height, engine);
+        Initialize();
+        this.rows = rows;
+        this.columns = cols;
+        this.texture = texture;
     }
 
     /**
@@ -129,7 +144,6 @@ public class Sprite extends Entity {
     private void Initialize() {
         this.id = spriteId++;
         currentFrame = 1;
-        isPlaying = false;
         this.visible = true;
         this.alpha = 100;
         this.rows = 1;
@@ -137,17 +151,34 @@ public class Sprite extends Entity {
     }
 
     /**
-     * play animation
+     * start animating
+     * @param fps
+     * @param start
+     * @param end
      */
-    public void play() {
-        isPlaying = true;
+    public void animate(double fps, int start, int end) {
+        animate(fps, start, end, 0);
     }
 
     /**
-     * stop animation
+     * start animation with number of loops to be done
+     * @param fps
+     * @param start
+     * @param end
+     * @param loop
      */
-    public void stop() {
-        isPlaying = false;
+    public void animate(double fps, int start, int end, int loop) {
+        if (this.fps != fps || this.start != start || this.end != end || this.loop != loop) {
+            timesPlayed = 0;
+        }
+        this.fps = fps;
+        this.start = start;
+        this.end = end;
+        this.loop = loop;
+
+        if (fps == 0) {
+            stopAnimation(start);
+        }
     }
 
 
@@ -190,11 +221,23 @@ public class Sprite extends Entity {
     }
 
     /**
+     * Stop the animation. The object will display the most recently shown frame
+     */
+    public void stopAnimation() {
+        stopAnimation(currentFrame);
+    }
+
+    /**
+     * Stop the current animation and set the frame to display.
+     *
      * @param frame
      */
-    public void gotoFrame(int frame) {
-        if (frame <= totalFrames)
-            currentFrame = frame;
+    public void stopAnimation(int frame) {
+        fps = 0;
+        this.currentFrame = frame;
+        this.start = frame;
+        this.end = frame;
+        this.loop = 0;
     }
 
     /**
@@ -205,11 +248,51 @@ public class Sprite extends Entity {
         if (!visible) {
             return;
         }
-        if (isPlaying) {
-            currentFrame++;
-            if (currentFrame > totalFrames)
-                currentFrame = 1;
+
+        animFinished = false;
+
+        if (fps > 0 && ((loop > 0 && timesPlayed <= loop) || loop == 0)) {    // Should animate if: fps > 0 and we've looped less than the max loops OR max loops is 0 so we should loop forever.
+            if (start <= end) {                                               // Loop forward (start frame is less than end frame)
+                if (currentFrame < start || currentFrame > end) {
+                    currentFrame = start;
+                }
+            } else {                                                          // Loop backwards (start frame is greater than end frame)
+                if (currentFrame > start || currentFrame < end) {                           // Go back to the start frame if frame is out of animation range
+                    currentFrame = start;
+                }
+            }
+
+            if (gameFramesPassed >= 60 / fps) {    // Determine if we should go to the next frame
+                if (start <= end)
+                    currentFrame++;                      // Animating forwards, increase frame
+                else
+                    currentFrame--;                                   // Animating backwards, decrease frame
+                gameFramesPassed = 0;                           // Reset counter
+            } else {
+                gameFramesPassed++;                             // Increase counter
+            }
+
+            if (start <= end) {             // If animating forwards
+                if (currentFrame > end) {          // Reached the end of the animation
+                    currentFrame = start;          // Go back to start of the animation
+                    animFinished = true;    // The animation finished.
+                    timesPlayed++;          // Increment times played.
+                }
+            } else {                        // If animating backwards
+                if (currentFrame < end) {          // Reached end of the animation
+                    animFinished = true;    // The animation finished.
+                    currentFrame = start;          // Go back to the start of the animation
+                    timesPlayed++;          // Increment times played.
+                }
+            }
+        } else {                   // Should not animate anymore.
+            animFinished = true;   // Animation over.
         }
+
+        if (timesPlayed >= loop && loop > 0) { // Done looping
+            currentFrame = end;
+        }
+
 
         textureCoordinates = Alignment.getTextureCordinates(this);
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(textureCoordinates.length * 4);
@@ -259,14 +342,7 @@ public class Sprite extends Entity {
                 gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getId());
             }
-        }else {
-            gl.glEnable(GL10.GL_TEXTURE_2D);
-            gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-
-            gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
-            gl.glBindTexture(GL10.GL_TEXTURE_2D,0);
         }
-
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 
@@ -286,15 +362,6 @@ public class Sprite extends Entity {
     }
 
     /**
-     * set the texture of the Sprite
-     *
-     * @param texture Texture
-     */
-    public void setTexture(Texture texture) {
-        this.texture = texture;
-    }
-
-    /**
      * Set the name of the sprite
      *
      * @param name - String
@@ -305,16 +372,6 @@ public class Sprite extends Entity {
 
 
     /**
-     * Handle the Move Event
-     *
-     * @param x
-     * @param y
-     */
-    public void HandleMove(float x, float y) {
-        onMove(x, y);
-    }
-
-    /**
      * Check if a point is inside an object
      *
      * @param x - x coordinate of the point
@@ -323,15 +380,6 @@ public class Sprite extends Entity {
      */
     public boolean HitTest(float x, float y) {
         return super.HitTest(x, y);
-    }
-
-
-    public void onMove(float x, float y) {
-
-    }
-
-    public void ReleaseOutside(float x, float y) {
-
     }
 
     /**
@@ -384,7 +432,7 @@ public class Sprite extends Entity {
         this.alpha = alpha;
     }
 
-    public Sprite getOwner(){
+    public Sprite getOwner() {
         return this;
     }
 }

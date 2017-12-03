@@ -19,10 +19,10 @@ import static javax.microedition.khronos.opengles.GL10.GL_SRC_ALPHA;
 public class HitBox extends Entity {
     public CollisionBox c;    // The collidable from which this hit box was generated.
 
-    public float x; // The x position on the cell grid of the upper left corner of this box.
-    public float y; // The y position on the cell grid of the upper left corner of this box.
-    public float w; // The width in cells on the cell grid of this box.
-    public float h; // The width in cells on the cell grid of this box.
+    public float x;
+    public float y;
+    public float w;
+    public float h;
 
     private short[] indices = {0, 1, 2, 0, 3, 2};
 
@@ -61,10 +61,11 @@ public class HitBox extends Entity {
         y = t.getY() - t.getHeight() / 10;
         w = t.getWidth() - t.getWidth() / 5;
         h = t.getHeight() - t.getHeight() / 5;
-        setX(x);
-        setY(y);
-        setWidth(w);
-        setHeight(h);
+        //set x, y, width, height and add all pluses if its set
+        setX(x + owner.getPlusCollisionBoxX());
+        setY(y + owner.getPlusCollisionBoxY());
+        setWidth(w + owner.getPlusCollisionBoxWidth());
+        setHeight(h + owner.getPlusCollisionBoxHeight());
     }
 
     /**

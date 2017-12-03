@@ -10,7 +10,6 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public abstract class Entity implements IEntity, EntityComponents {
 
-
     public boolean visible;
 
     public float x;
@@ -18,6 +17,12 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     private float width;
     private float height;
+
+    //Variables for custom your collision box
+    private int plusCollisionBoxX = 0;
+    private int plusCollisionBoxY = 0;
+    private int plusCollisionBoxWidth = 0;
+    private int plusCollisionBoxHeight = 0;
 
     private double mScale;
 
@@ -43,14 +48,21 @@ public abstract class Entity implements IEntity, EntityComponents {
     }
 
     @Override
-    public void draw(GL10 gl10){
-
+    public void draw(GL10 gl10) {
     }
 
+    /**
+     * get the name of the entity
+     * @return
+     */
     public String getName() {
         return mName;
     }
 
+    /**
+     * set the name for finding the entity later
+     * @param name
+     */
     public void setName(String name) {
         mName = name;
     }
@@ -66,6 +78,7 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     /**
      * set the x position
+     *
      * @param x
      */
     public void setX(float x) {
@@ -74,6 +87,7 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     /**
      * set the y position
+     *
      * @param y
      */
     public void setY(float y) {
@@ -100,10 +114,11 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     /**
      * Set position x and y
+     *
      * @param x
      * @param y
      */
-    public void setPosition(float x, float y){
+    public void setPosition(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -147,7 +162,7 @@ public abstract class Entity implements IEntity, EntityComponents {
         return (x > this.x && x < this.x + this.width) && (y > this.y && y < this.y + this.height);
     }
 
-    public EntityComponents getEntityComponents(){
+    public EntityComponents getEntityComponents() {
         return this;
     }
 
@@ -157,6 +172,54 @@ public abstract class Entity implements IEntity, EntityComponents {
 
     public void setEngine(Engine engine) {
         mEngine = engine;
+    }
+
+    /**
+     * set a number to be added to collision box X
+     * @param x
+     */
+    public void setPlusCollisionBoxX(int x) {
+        plusCollisionBoxX += x;
+    }
+
+    /**
+     * set a number to be added to collision box Y
+     * @param y
+     */
+    public void setPlusCollisionBoxY(int y) {
+        plusCollisionBoxY += y;
+    }
+
+    /**
+     * set a number to be added to collision box Width
+     * @param widht
+     */
+    public void setPlusCollisionBoxWidth(int widht) {
+        plusCollisionBoxWidth += widht;
+    }
+
+    /**
+     * set a number to be added to collision box Height
+     * @param height
+     */
+    public void setPlusCollisionBoxHeight(int height) {
+        plusCollisionBoxHeight += height;
+    }
+
+    public int getPlusCollisionBoxX() {
+        return plusCollisionBoxX;
+    }
+
+    public int getPlusCollisionBoxY() {
+        return plusCollisionBoxY;
+    }
+
+    public int getPlusCollisionBoxWidth() {
+        return plusCollisionBoxWidth;
+    }
+
+    public int getPlusCollisionBoxHeight() {
+        return plusCollisionBoxHeight;
     }
 }
 

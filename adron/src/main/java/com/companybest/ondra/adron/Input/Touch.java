@@ -12,7 +12,6 @@ import com.companybest.ondra.adron.Rendering.AdrGlSurfaceView;
 /**
  * class for handling touch event
  */
-//TODO using multi Touch
 public class Touch implements View.OnTouchListener {
 
     private int numOfTouches;
@@ -90,6 +89,10 @@ public class Touch implements View.OnTouchListener {
         }
 
         return false;
+    }
+
+    public int getNumOfTouches() {
+        return numOfTouches;
     }
 
     /**
@@ -216,6 +219,4 @@ public class Touch implements View.OnTouchListener {
     private void setY(int y) {
         mPoint.y = y;
     }
-
-
 }

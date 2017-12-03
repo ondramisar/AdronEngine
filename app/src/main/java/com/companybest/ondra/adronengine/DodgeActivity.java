@@ -7,7 +7,6 @@ import com.companybest.ondra.adron.BaseClasses.BasicAdrClass;
 import com.companybest.ondra.adron.Collisions.CollisionSystem;
 import com.companybest.ondra.adron.Engine.Engine;
 import com.companybest.ondra.adron.Entity.Camera;
-import com.companybest.ondra.adron.Entity.Entity;
 import com.companybest.ondra.adron.Entity.Scene;
 import com.companybest.ondra.adron.OpenGl.Texture;
 import com.companybest.ondra.adron.OpenGl.TextureLibrary;
@@ -30,9 +29,11 @@ public class DodgeActivity extends BasicAdrClass {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dodge);
+
         score = findViewById(R.id.score_dodge);
         scoreNum = 0;
         score.setText(String.valueOf(scoreNum));
+
         AdrGlSurfaceView adrGlSurfaceView = findViewById(R.id.dodgeView);
         Engine engine = new Engine(this, new TextureLibrary(), true);
         setUpEngine(engine, this, adrGlSurfaceView);
@@ -54,19 +55,19 @@ public class DodgeActivity extends BasicAdrClass {
     @Override
     public Scene setUpScene() {
         Scene scene = new Scene();
+
         secondPosition = getWidth() / 2 - 15;
-        thirdPosition = secondPosition +  getWidth() / 3;
+        thirdPosition = secondPosition + getWidth() / 3;
         firstPosition = secondPosition - getWidth() / 3;
         speed = 2;
 
-
-        Texture texture = new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary());
+        Texture texture = new Texture(getApplicationContext(), R.drawable.figure, getTextureLibrary());
         CollisionSystem collisionSystem = new CollisionSystem(getEngine());
 
         Camera camera = new Camera(0, 0, 1, getWidth() / 2, getHeight() / 2, getEngine());
-        DodgePlayer dodgePlayer = new DodgePlayer(getWidth() / 2 - 15, getHeight() - 50, 30, 30, getEngine(), texture, collisionSystem,this);
+        DodgePlayer dodgePlayer = new DodgePlayer(getWidth() / 2 - 15, getHeight() - 50, 30, 30, 1, 5, getEngine(), texture, collisionSystem, this);
         dodgePlayer.setName("Player");
-
+        dodgePlayer.animate(10, 1, 6);
 
         DodgePlayer obsticle = new DodgePlayer(getWidth() / 2 - 15, -50, 30, 30, getEngine(), texture, collisionSystem, this);
         obsticle.setName("Obsticle");
@@ -84,7 +85,7 @@ public class DodgeActivity extends BasicAdrClass {
         DodgePlayer obsticle = (DodgePlayer) getScene().findEntity("Obsticle");
 
         obsticle.setY(obsticle.getY() + speed);
-        if (obsticle.getY() > getHeight()){
+        if (obsticle.getY() > getHeight()) {
             scoreNum += 1;
             runOnUiThread(new Runnable() {
                 @Override
@@ -103,6 +104,7 @@ public class DodgeActivity extends BasicAdrClass {
                 obsticle.setX(thirdPosition);
             }
         }
+
     }
 
     @Override
@@ -119,33 +121,4 @@ public class DodgeActivity extends BasicAdrClass {
         }
     }
 
-    @Override
-    public void onRelease(float x, float y) {
-
-    }
-
-    @Override
-    public void onMove(float x, float y) {
-
-    }
-
-    @Override
-    public void onPress(Entity entity) {
-
-    }
-
-    @Override
-    public void onRelease(Entity entity) {
-
-    }
-
-    @Override
-    public void onMove(Entity entity) {
-
-    }
-
-    @Override
-    public void onReleaseOutside(Entity entity) {
-
-    }
 }

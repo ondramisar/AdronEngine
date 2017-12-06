@@ -84,6 +84,7 @@ public class MapActivity extends BasicAdrClass {
         Log.i("usern", String.valueOf(getWidth()));
 
         if (getTouch().held()){
+            dodgePlayer.animate(15,1,5);
             if (getTouch().getX() > getWidth() /2) {
                 dodgePlayer.setX(dodgePlayer.getX() + 1f);
             //    Log.i("usern", String.valueOf(dodgePlayer.getX()));
@@ -93,6 +94,8 @@ public class MapActivity extends BasicAdrClass {
                 dodgePlayer.setX(dodgePlayer.getX() - 1f);
               //  Log.i("usern", String.valueOf(dodgePlayer.getX()));
             }
+        } else {
+            dodgePlayer.stopAnimation();
         }
     }
 

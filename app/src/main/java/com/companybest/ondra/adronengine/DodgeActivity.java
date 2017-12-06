@@ -68,7 +68,6 @@ public class DodgeActivity extends BasicAdrClass {
         Camera camera = new Camera(0, 0, 1, getWidth() / 2, getHeight() / 2, getEngine());
         DodgePlayer dodgePlayer = new DodgePlayer(getWidth() / 2 - 15, getHeight() - 50, 30, 30, 1, 5, getEngine(), texture, collisionSystem, this);
         dodgePlayer.setName("Player");
-        dodgePlayer.animate(10, 1, 6);
 
         DodgePlayer obsticle = new DodgePlayer(getWidth() / 2 - 15, -50, 30, 30, getEngine(), textureObs, collisionSystem, this);
         obsticle.setName("Obsticle");
@@ -111,6 +110,7 @@ public class DodgeActivity extends BasicAdrClass {
     @Override
     public void onPress(float x, float y) {
         DodgePlayer dodgePlayer = (DodgePlayer) getScene().findEntity("Player");
+        dodgePlayer.animate(15,1,5);
         if (x > getWidth() / 2) {
             if (!(dodgePlayer.getX() + getWidth() / 3 > getWidth()))
                 dodgePlayer.setX(dodgePlayer.getX() + getWidth() / 3);
@@ -122,4 +122,10 @@ public class DodgeActivity extends BasicAdrClass {
         }
     }
 
+    @Override
+    public void onRelease(float x, float y) {
+        super.onRelease(x, y);
+        DodgePlayer dodgePlayer = (DodgePlayer) getScene().findEntity("Player");
+        dodgePlayer.stopAnimation();
+    }
 }

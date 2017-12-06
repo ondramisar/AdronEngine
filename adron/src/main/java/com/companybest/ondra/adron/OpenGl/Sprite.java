@@ -348,10 +348,11 @@ public class Sprite extends Entity {
         }
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-
+        //gl.glPushMatrix();
+       // gl.glRotatef(getAngle(), getX()- getWidth() /2, getY() - getHeight() / 2, 0);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.length, GL10.GL_UNSIGNED_SHORT, indexBuffer);
+     //   gl.glPopMatrix();
 
-        // Disable the vertices buffer.
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 
         if (texture != null) {

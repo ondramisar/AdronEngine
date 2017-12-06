@@ -66,6 +66,7 @@ public class HitBox extends Entity {
         setY(y + owner.getPlusCollisionBoxY());
         setWidth(w + owner.getPlusCollisionBoxWidth());
         setHeight(h + owner.getPlusCollisionBoxHeight());
+        setAngle(t.getAngle());
     }
 
     /**

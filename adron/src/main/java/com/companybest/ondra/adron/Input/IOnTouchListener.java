@@ -52,4 +52,8 @@ public interface IOnTouchListener {
      * @param entity
      */
     public void onReleaseOutside(Entity entity);
+
+    public void onGestureRight();
+
+    public void onGestureLeft();
 }

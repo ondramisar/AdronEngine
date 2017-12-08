@@ -17,8 +17,12 @@ public class Touch implements View.OnTouchListener {
     private int numOfTouches;
     private boolean isBeingTouch;
 
+    float xSwipeGesture1;
+    float xSwipeGesture2;
+
     private IOnTouchListener mOnTouchListener;
     private Point mPoint;
+    static final int MIN_DISTANCE = 150;
 
     /**
      * @param onTouchListener interface implemented in activity
@@ -52,6 +56,8 @@ public class Touch implements View.OnTouchListener {
                 case MotionEvent.ACTION_DOWN:
                     isBeingTouch = true;
                     DespatchPress(x, y, view);
+
+                    xSwipeGesture1 = event.getX();
                     return true;
 
                 case MotionEvent.ACTION_MOVE:
@@ -60,7 +66,23 @@ public class Touch implements View.OnTouchListener {
 
                 case MotionEvent.ACTION_UP:
                     isBeingTouch = false;
+
+                    xSwipeGesture2 = event.getX();
+                    float deltaX = xSwipeGesture2 - xSwipeGesture1;
+
+                    if (Math.abs(deltaX) > MIN_DISTANCE) {
+                        // Left to Right swipe action
+                        if (xSwipeGesture2 > xSwipeGesture1) {
+                            gestureRight(view);
+                        }
+                        // Right to left swipe action
+                        else {
+                            gestureLeft(view);
+                        }
+                    }
+
                     DespatchRelease(x, y, view);
+
 
                     return true;
 
@@ -193,6 +215,19 @@ public class Touch implements View.OnTouchListener {
     public void DespatchMove(float x, float y, AdrGlSurfaceView view) {
         if (view.getScene() != null) {
             HandleMove(x, y, view);
+        }
+    }
+
+
+    public void gestureRight(AdrGlSurfaceView view) {
+        if (view.getScene() != null) {
+            mOnTouchListener.onGestureRight();
+        }
+    }
+
+    public void gestureLeft(AdrGlSurfaceView view) {
+        if (view.getScene() != null) {
+            mOnTouchListener.onGestureLeft();
         }
     }
 

@@ -30,7 +30,9 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
     public void setUpEngine(Engine engine, IOnTouchListener onTouchListener, Context context) {
         this.mTouch = new Touch(onTouchListener);
         this.mEngine = engine;
-        setUpView(new AdrGlSurfaceView(context), mTouch);
+        AdrGlSurfaceView adrGlSurfaceView = new AdrGlSurfaceView(context);
+        setContentView(adrGlSurfaceView);
+        setUpView(adrGlSurfaceView, mTouch);
     }
 
     public void setUpEngine(Engine engine, IOnTouchListener onTouchListener, AdrGlSurfaceView adrGlSurfaceView) {
@@ -125,6 +127,16 @@ public abstract class BasicAdrClass extends AppCompatActivity implements IRender
 
     @Override
     public void onReleaseOutside(Entity entity) {
+
+    }
+
+    @Override
+    public void onGestureRight() {
+
+    }
+
+    @Override
+    public void onGestureLeft() {
 
     }
 }

@@ -47,6 +47,22 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        Button crossy = findViewById(R.id.crossy_button);
+        crossy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), CrossyActivity.class);
+                startActivity(i);
+            }
+        });
 
+        Button camerapreview = findViewById(R.id.camera_preview_button);
+        camerapreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), CameraPreview.class);
+                startActivity(i);
+            }
+        });
     }
 }

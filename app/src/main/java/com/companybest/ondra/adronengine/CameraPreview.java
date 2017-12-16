@@ -34,10 +34,10 @@ public class CameraPreview extends BasicAdrClass {
       /*  setRequestedOrientation( ActivityInfo.SCREEN_ORIENTATION_PORTRAIT );
 */
         // Next, we disable the application's title bar...
-        requestWindowFeature( Window.FEATURE_NO_TITLE );
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         // ...and the notification bar. That way, we can use the full screen.
-        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN );
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.camera_preview_activity);
         AdrGlSurfaceView adrGlSurfaceView = findViewById(R.id.camera_preview);
@@ -69,9 +69,9 @@ public class CameraPreview extends BasicAdrClass {
         CollisionSystem collisionSystem = new CollisionSystem(getEngine());
         scene.addComponent(collisionSystem);
         Texture texture = new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary());
-        crossyPlayer = new CrossyPlayer(getWidth() / 2 - 10, getHeight() - 20, 20, 20, getEngine(), texture, collisionSystem, this);
+        crossyPlayer = new CrossyPlayer(getWidth() / 2 - 10, getHeight() - 20, 20, 20, getEngine(), texture, this);
         scene.addComponent(crossyPlayer);
-
+        collisionSystem.addEntity(crossyPlayer);
         for (int i = 0; i < mObsticles.length; i++) {
             int x = (int) (Math.random() * (getWidth() - 10) + 10);
             mObsticles[i] = new CrossyObsticle(x, 0 - (i * 20), 20, 20, getEngine(), texture, collisionSystem);

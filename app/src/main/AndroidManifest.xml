@@ -23,6 +23,7 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".CrossyActivity" />
         <activity android:name=".CameraPreview"/>
+        <activity android:name=".TestKotlinActivity"/>
     </application>
 
 </manifest>

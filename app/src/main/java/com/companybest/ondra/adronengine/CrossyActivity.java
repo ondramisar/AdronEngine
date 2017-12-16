@@ -45,12 +45,12 @@ public class CrossyActivity extends BasicAdrClass {
 
         Camera camera = new Camera(0, 0, 1, getWidth() / 2, getHeight() / 2, getEngine());
         scene.addComponent(camera);
-        CollisionSystem collisionSystem = new CollisionSystem(getEngine());
+        CollisionSystem collisionSystem = new CollisionSystem();
         scene.addComponent(collisionSystem);
         Texture texture = new Texture(getApplicationContext(), R.drawable.ic_launcher, getTextureLibrary());
-        crossyPlayer = new CrossyPlayer(getWidth() / 2 - 10, getHeight() - 20, 20, 20, getEngine(), texture, collisionSystem, this);
+        crossyPlayer = new CrossyPlayer(getWidth() / 2 - 10, getHeight() - 20, 20, 20, getEngine(), texture, this);
         scene.addComponent(crossyPlayer);
-
+        collisionSystem.addEntity(crossyPlayer);
         for (int i = 0; i < mObsticles.length; i++) {
             int x = (int) (Math.random() * (getWidth() - 10) + 10);
             mObsticles[i] = new CrossyObsticle(x, 0 - (i * 20), 20, 20, getEngine(), texture, collisionSystem);

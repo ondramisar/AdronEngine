@@ -64,5 +64,14 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button kotlinTry = findViewById(R.id.kotlin_try_button);
+        kotlinTry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), TestKotlinActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
